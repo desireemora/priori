@@ -3,6 +3,7 @@ package desireemora.mail.usf.jarvis_beta.ui.login;
 import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -19,8 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import desireemora.mail.usf.jarvis_beta.R;
-import desireemora.mail.usf.jarvis_beta.ui.login.LoginViewModel;
-import desireemora.mail.usf.jarvis_beta.ui.login.LoginViewModelFactory;
+import desireemora.mail.usf.jarvis_beta.Register;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -33,8 +33,8 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
-        final EditText usernameEditText = findViewById(R.id.username);
-        final EditText passwordEditText = findViewById(R.id.password);
+        final EditText usernameEditText = findViewById(R.id.prompt_email);
+        final EditText passwordEditText = findViewById(R.id.prompt_password);
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
@@ -113,6 +113,11 @@ public class LoginActivity extends AppCompatActivity {
                         passwordEditText.getText().toString());
             }
         });
+    }
+
+    public void registerUser(View view){
+        Intent intent = new Intent(this, Register.class);
+        startActivity(intent);
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
