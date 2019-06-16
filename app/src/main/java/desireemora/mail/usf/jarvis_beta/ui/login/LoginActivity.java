@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import desireemora.mail.usf.jarvis_beta.R;
 import desireemora.mail.usf.jarvis_beta.Register;
+import desireemora.mail.usf.jarvis_beta.Welcome;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -137,6 +138,8 @@ public class LoginActivity extends AppCompatActivity {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, Welcome.class);
+        startActivity(intent);
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {

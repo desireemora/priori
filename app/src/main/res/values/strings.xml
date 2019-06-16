@@ -5,7 +5,7 @@
     <string name="prompt_password">password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome!"</string>
+    <string name="welcome">"Welcome, "</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be > 5 characters</string>
     <string name="login_failed">"Login failed"</string>
@@ -16,8 +16,6 @@
     <string name="register_password">password</string>
     <string name="register_pass_confirm">re-enter password</string>
     <string name="register_birthday">birthday</string>
-
-
 
 
 </resources>
