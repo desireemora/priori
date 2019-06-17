@@ -19,8 +19,15 @@ public class Welcome extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //weather API setup
+        string url = "http://api.openweathermap.org/data/2.5/weather?q=tampa&APPID=001ade5089a978cd383942ac275ac67c";
+        URL obj = new URL(url);
+        httpURLConnection con = (httpURLConnection) obj.openConnection();
+        //The next section should call on a JSON parser
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
 
         final ImageButton settingsButton = findViewById(R.id.btn_settings);
         settingsButton.setOnClickListener(new View.OnClickListener() {
