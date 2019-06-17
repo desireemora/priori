@@ -9,11 +9,16 @@ import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import 'com.google.code.gson:gson:2.8.2'
 
-import java.io.BufferedReader;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLConnection;
 
 public class Welcome extends AppCompatActivity {
@@ -24,36 +29,52 @@ public class Welcome extends AppCompatActivity {
 //        string url = "http://api.openweathermap.org/data/2.5/weather?q=tampa&APPID=001ade5089a978cd383942ac275ac67c";
 //        URL obj = new URL(url);
 //        httpURLConnection con = (httpURLConnection) obj.openConnection();
-//        //The next section should call on a JSON parser
-        HttpClientBuilder   httpclient = new HttpClientBuilder(new BasicHttpParams());
-        HttpPost httppost = new HttpPost(http://someJSONUrl/jsonWebService);
-// Depends on your web service
-        httppost.setHeader("Content-type", "application/json");
+//
+//          The next section should call on a JSON parser
+        String sURL = "http://api.openweathermap.org/data/2.5/weather?q=tampa&APPID=001ade5089a978cd383942ac275ac67c"; //just a string
 
-        InputStream inputStream = null;
-        String result = null;
+        // Connect to the URL using java's native library
+        URL url = null;
+
         try {
-            HttpResponse response = httpclient.execute(httppost);
-            HttpEntity entity = response.getEntity();
-
-            inputStream = entity.getContent();
-            // json is UTF-8 by default
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
-            StringBuilder sb = new StringBuilder();
-
-            String line = null;
-            while ((line = reader.readLine()) != null)
-            {
-                sb.append(line + "\n");
-            }
-            result = sb.toString();
-        } catch (Exception e) {
-            // Oops
-        }
-        finally {
-            try{if(inputStream != null)inputStream.close();}catch(Exception squish){}
+            url = new URL(sURL);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
 
+        URLConnection request = null;
+
+        try {
+            request = url.openConnection();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            request.connect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Convert to a JSON object to print data
+        JsonParser jp = new JsonParser(); //from gson
+        JsonElement root = null; //Convert the input stream to a json element
+        try {
+            root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        JsonObject rootobj = root.getAsJsonObject(); //May be an array, may be an object.
+        String weather = rootobj.get("temp").getAsString(); //just grab the weather
+
+        TextView weather_view_text = (TextView)findViewById(R.id.weather_temp_text);
+        weather_view_text.setText(weather);
+
+
+
+
+
+        // beginning of working code
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
