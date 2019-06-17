@@ -10,6 +10,12 @@ import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import 'com.google.code.gson:gson:2.8.2'
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URLConnection;
 
 import desireemora.mail.usf.jarvis_beta.ui.login.LoginActivity;
 import desireemora.mail.usf.jarvis_beta.ui.login.LoginViewModel;
@@ -24,6 +30,34 @@ public class Welcome extends AppCompatActivity {
 //        URL obj = new URL(url);
 //        httpURLConnection con = (httpURLConnection) obj.openConnection();
 //        //The next section should call on a JSON parser
+        HttpClientBuilder   httpclient = new HttpClientBuilder(new BasicHttpParams());
+        HttpPost httppost = new HttpPost(http://someJSONUrl/jsonWebService);
+// Depends on your web service
+        httppost.setHeader("Content-type", "application/json");
+
+        InputStream inputStream = null;
+        String result = null;
+        try {
+            HttpResponse response = httpclient.execute(httppost);
+            HttpEntity entity = response.getEntity();
+
+            inputStream = entity.getContent();
+            // json is UTF-8 by default
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+            StringBuilder sb = new StringBuilder();
+
+            String line = null;
+            while ((line = reader.readLine()) != null)
+            {
+                sb.append(line + "\n");
+            }
+            result = sb.toString();
+        } catch (Exception e) {
+            // Oops
+        }
+        finally {
+            try{if(inputStream != null)inputStream.close();}catch(Exception squish){}
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
