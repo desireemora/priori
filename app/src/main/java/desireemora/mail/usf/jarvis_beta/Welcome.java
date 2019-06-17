@@ -1,6 +1,5 @@
 package desireemora.mail.usf.jarvis_beta;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,10 +15,6 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URLConnection;
-
-import desireemora.mail.usf.jarvis_beta.ui.login.LoginActivity;
-import desireemora.mail.usf.jarvis_beta.ui.login.LoginViewModel;
-import desireemora.mail.usf.jarvis_beta.ui.login.LoginViewModelFactory;
 
 public class Welcome extends AppCompatActivity {
 
@@ -111,6 +106,14 @@ public class Welcome extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Welcome.this, AddTask.class);
+                startActivity(intent);
+            }
+        });
+        final ImageButton btnTracker = findViewById(R.id.btn_productivityTracker);
+        btnTracker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Welcome.this, Productivity.class);
                 startActivity(intent);
             }
         });
