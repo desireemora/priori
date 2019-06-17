@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
                 // If you just use this that is not a valid context. Use ActivityName.this
                 startActivity(intent);
             }
-        }, 2000);
+        }, 1000);
     }
 
 
