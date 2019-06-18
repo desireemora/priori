@@ -123,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                Intent intent = new Intent(LoginActivity.this, Welcome.class);
+                Intent intent = new Intent(LoginActivity.this, Register.class);
                 startActivity(intent);
             }
         });

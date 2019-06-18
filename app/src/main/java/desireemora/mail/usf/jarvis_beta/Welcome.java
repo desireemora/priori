@@ -1,8 +1,11 @@
 package desireemora.mail.usf.jarvis_beta;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -22,57 +25,11 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class Welcome extends AppCompatActivity {
+    static SharedPreferences mPreferences;
+    static SharedPreferences.Editor mEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        //weather API setup
-//        string url = "http://api.openweathermap.org/data/2.5/weather?q=tampa&APPID=001ade5089a978cd383942ac275ac67c";
-//        URL obj = new URL(url);
-//        httpURLConnection con = (httpURLConnection) obj.openConnection();
-//
-//          The next section should call on a JSON parser
-        String sURL = "http://api.openweathermap.org/data/2.5/weather?q=tampa&APPID=001ade5089a978cd383942ac275ac67c"; //just a string
-
-        // Connect to the URL using java's native library
-        URL url = null;
-
-        try {
-            url = new URL(sURL);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-        URLConnection request = null;
-
-        try {
-            request = url.openConnection();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            request.connect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Convert to a JSON object to print data
-        JsonParser jp = new JsonParser(); //from gson
-        JsonElement root = null; //Convert the input stream to a json element
-        try {
-            root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        JsonObject rootobj = root.getAsJsonObject(); //May be an array, may be an object.
-        String weather = rootobj.get("temp").getAsString(); //just grab the weather
-
-        TextView weather_view_text = (TextView)findViewById(R.id.weather_temp_text);
-        weather_view_text.setText(weather);
-
-
-
-
 
         // beginning of working code
         super.onCreate(savedInstanceState);
@@ -139,9 +96,70 @@ public class Welcome extends AppCompatActivity {
             }
         });
 
-    }
-    void calendarView(View view){
+//        AsyncTask.execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                //TODO your background code
+//                //      The next section should call on a JSON parser
+//                String sURL = "http://api.openweathermap.org/data/2.5/weather?q=tampa&APPID=001ade5089a978cd383942ac275ac67c"; //just a string
+//
+//                // Connect to the URL using java's native library
+//                URL url = null;
+//
+//                try {
+//                    url = new URL(sURL);
+//                } catch (MalformedURLException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                URLConnection request = null;
+//
+//                try {
+//                    request = url.openConnection();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                try {
+//                    request.connect();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                // Convert to a JSON object to print data
+//                JsonParser jp = new JsonParser(); //from gson
+//                JsonElement root = null; //Convert the input stream to a json element
+//                try {
+//                    root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                JsonObject rootObj = root.getAsJsonObject(); //May be an array, may be an object.
+//                String weather = rootObj.get("temp").getAsString(); //just grab the weather
+//
+//                TextView weather_view_text = (TextView)findViewById(R.id.weather_temp_text);
+//                weather_view_text.setText(weather);
+//            }
+//        });
 
+
+
+
+    }
+    protected void onResume(){
+        super.onResume();
+//        checkTheme(mPreferences.getString(getString(R.string.darkMode), "False"));
+
+    }
+
+    void checkTheme(String dark){
+        if (dark == "True") {
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            //Settings.this.recreate();
+        } else {
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            // Settings.this.recreate();
+        }
     }
 
 }

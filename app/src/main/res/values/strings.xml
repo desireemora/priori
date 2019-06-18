@@ -16,6 +16,8 @@
     <string name="register_password">password</string>
     <string name="register_pass_confirm">re-enter password</string>
     <string name="register_birthday">birthday</string>
+    
+    <string name="darkMode">desireemora.mail.usf.jarvis_beta.darkMode</string>
 
 
 </resources>
