@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "desireemora.mail.usf.jarvis_beta"
+        applicationId "com.priori.app.beta"
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1

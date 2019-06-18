@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Jarvis_Beta</string>
+    <string name="app_name">priori</string>
     <string name="title_activity_login">Log in</string>
     <string name="prompt_email">email</string>
     <string name="prompt_password">password</string>
@@ -13,11 +13,11 @@
     <string name="register">Register</string>
     <string name="register_email">email</string>
     <string name="register_name">name</string>
-    <string name="register_password">password</string>
+    <string name="register_password">password</string>iop
     <string name="register_pass_confirm">re-enter password</string>
     <string name="register_birthday">birthday</string>
     
-    <string name="darkMode">desireemora.mail.usf.jarvis_beta.darkMode</string>
+    <string name="darkMode">com.priori.app.beta.darkMode</string>
 
 
 </resources>
