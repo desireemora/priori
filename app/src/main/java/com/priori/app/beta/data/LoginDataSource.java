@@ -1,6 +1,6 @@
-package com.priori.app.jarvis_beta.data;
+package com.priori.app.beta.data;
 
-import com.priori.app.jarvis_beta.data.model.LoggedInUser;
+import com.priori.app.beta.data.model.LoggedInUser;
 
 import java.io.IOException;
 

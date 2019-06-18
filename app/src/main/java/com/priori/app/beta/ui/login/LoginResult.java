@@ -1,4 +1,4 @@
-package com.priori.app.jarvis_beta.ui.login;
+package com.priori.app.beta.ui.login;
 
 import android.support.annotation.Nullable;
 

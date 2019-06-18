@@ -1,14 +1,14 @@
-package com.priori.app.jarvis_beta.ui.login;
+package com.priori.app.beta.ui.login;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.util.Patterns;
 
-import com.priori.app.jarvis_beta.data.LoginRepository;
-import com.priori.app.jarvis_beta.data.Result;
-import com.priori.app.jarvis_beta.data.model.LoggedInUser;
-import com.priori.app.jarvis_beta.R;
+import com.priori.app.beta.data.LoginRepository;
+import com.priori.app.beta.data.Result;
+import com.priori.app.beta.data.model.LoggedInUser;
+import com.priori.app.beta.R;
 
 public class LoginViewModel extends ViewModel {
 

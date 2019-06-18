@@ -1,11 +1,11 @@
-package com.priori.app.jarvis_beta.ui.login;
+package com.priori.app.beta.ui.login;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
-import com.priori.app.jarvis_beta.data.LoginDataSource;
-import com.priori.app.jarvis_beta.data.LoginRepository;
+import com.priori.app.beta.data.LoginDataSource;
+import com.priori.app.beta.data.LoginRepository;
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.

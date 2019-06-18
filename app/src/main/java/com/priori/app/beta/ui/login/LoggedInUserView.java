@@ -1,4 +1,4 @@
-package com.priori.app.jarvis_beta.ui.login;
+package com.priori.app.beta.ui.login;
 
 /**
  * Class exposing authenticated user details to the UI.

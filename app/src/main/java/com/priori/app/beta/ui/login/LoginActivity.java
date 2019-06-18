@@ -1,4 +1,4 @@
-package com.priori.app.jarvis_beta.ui.login;
+package com.priori.app.beta.ui.login;
 
 import android.app.Activity;
 import android.arch.lifecycle.Observer;
@@ -19,9 +19,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.priori.app.jarvis_beta.R;
-import com.priori.app.jarvis_beta.Register;
-import com.priori.app.jarvis_beta.Welcome;
+import com.priori.app.beta.R;
+import com.priori.app.beta.Register;
+import com.priori.app.beta.Welcome;
 
 public class LoginActivity extends AppCompatActivity {
 

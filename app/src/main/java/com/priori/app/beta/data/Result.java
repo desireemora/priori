@@ -1,4 +1,4 @@
-package com.priori.app.jarvis_beta.data;
+package com.priori.app.beta.data;
 
 /**
  * A generic class that holds a result success w/ data or an error exception.
