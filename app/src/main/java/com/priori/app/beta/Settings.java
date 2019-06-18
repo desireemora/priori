@@ -37,7 +37,7 @@ public class Settings extends AppCompatActivity {
         locationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Settings.this, Location.class);
+                Intent intent = new Intent(Settings.this, WeatherPage.class);
                 startActivity(intent);
             }
         });
