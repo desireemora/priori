@@ -18,13 +18,23 @@ public class Settings extends AppCompatActivity {
     private TextView textdark;
     static SharedPreferences mPreferences;
     static SharedPreferences.Editor mEditor;
+    private Switch swMantra;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        //Defining the variables we will use
         textdark = findViewById(R.id.textView5);
+        swdarkMode = findViewById(R.id.sw_DarkMode);
+        swMantra = findViewById(R.id.mantraSwitch);
+
+        //preferences sheet variables
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mPreferences.edit();
+
+        //Sending intents when the back button is clicked
         final ImageButton backButton = findViewById(R.id.btn_back);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,12 +52,23 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        swdarkMode = findViewById(R.id.sw_DarkMode);
-        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mEditor = mPreferences.edit();
+
+        //checking the saved state of toggles
         checkSharedPreferences();
 //        Settings.this.recreate();
 
+        //Switch mantra toggle onclick listener
+        swMantra.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                mEditor.putBoolean("mantraState", swMantra.isChecked()); // value to store
+                mEditor.apply();
+            }
+        });
+
+        //Switch dark mode toggle onclick listener
         swdarkMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,15 +82,16 @@ public class Settings extends AppCompatActivity {
                     mEditor.apply();
                     getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
-//                checkSharedPreferences();
-//                Settings.this.recreate();
             }
         });
 
 
     }
+
     private void checkSharedPreferences(){
         String themeSet = mPreferences.getString(getString(R.string.darkMode), "True");
+        Boolean mantraSet = mPreferences.getBoolean("mantraState", true);
+
         if (themeSet == "True") {
             swdarkMode.setChecked(true);
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -79,7 +101,10 @@ public class Settings extends AppCompatActivity {
             swdarkMode.setChecked(false);
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             textdark.setText("DARK MODE OFF");
-           // Settings.this.recreate();
+            // Settings.this.recreate();
         }
+
+        swMantra.setChecked(mantraSet);
+
     }
 }

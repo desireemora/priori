@@ -7,7 +7,7 @@
     tools:context=".Welcome">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/mantra_txt"
         android:layout_width="319dp"
         android:layout_height="149dp"
         android:layout_marginStart="8dp"
@@ -117,7 +117,7 @@
         android:layout_marginRight="8dp"
         app:layout_constraintEnd_toStartOf="@+id/btn_productivityTracker"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/mantra_txt" />
 
     <ImageButton
         android:id="@+id/btn_productivityTracker"
@@ -130,7 +130,7 @@
         android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/mantra_txt"
         app:srcCompat="@android:drawable/btn_star_big_off" />
 
     <ImageButton
@@ -144,7 +144,7 @@
         android:layout_marginRight="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_productivityTracker"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/mantra_txt"
         app:srcCompat="@android:drawable/ic_menu_add" />
 
     <LinearLayout

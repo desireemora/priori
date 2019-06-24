@@ -1,6 +1,8 @@
 package com.priori.app.beta;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
@@ -9,10 +11,15 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 
 public class Welcome extends AppCompatActivity {
+
+    static SharedPreferences mPreferences;
+    static SharedPreferences.Editor mEditor;
+    private TextView mantra_txt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +27,18 @@ public class Welcome extends AppCompatActivity {
         // beginning of working code
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+        //Defining the variables we will use
+        mantra_txt = findViewById(R.id.mantra_txt);
+
+        //preferences sheet variables
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mPreferences.edit();
+
+        //checks for mantra visibility status
+        checkSharedPreferences();
+
+
 
 
         final ImageButton settingsButton = findViewById(R.id.btn_settings);
@@ -147,5 +166,21 @@ public class Welcome extends AppCompatActivity {
             // Settings.this.recreate();
         }
     }
+
+
+    private void checkSharedPreferences(){
+        Boolean mantraSet = mPreferences.getBoolean("mantraState", true);
+
+        if(mantraSet == true){
+            mantra_txt.setVisibility(View.VISIBLE);
+        }else{
+            mantra_txt.setVisibility(View.INVISIBLE);
+        }
+
+    }
+
+
+
+
 
 }
