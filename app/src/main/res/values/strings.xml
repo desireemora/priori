@@ -19,6 +19,8 @@
 
     <string name="darkMode">com.priori.app.beta.darkMode</string>
     <string name="mantraCheck">true</string>
+    <string name="register_button">register</string>
+    <string name="login_button">Login</string>
 
 
 </resources>

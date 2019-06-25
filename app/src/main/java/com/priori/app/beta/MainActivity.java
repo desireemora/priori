@@ -5,9 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.*;
 
-
-import com.priori.app.beta.ui.login.LoginActivity;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -18,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             public void run(){
                 // do something
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                Intent intent = new Intent(MainActivity.this, Login.class);
                 // If you just use this that is not a valid context. Use ActivityName.this
                 startActivity(intent);
             }
