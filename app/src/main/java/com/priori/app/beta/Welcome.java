@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-=import android.widget.TextView;
+import android.widget.TextView;
 
 
 public class Welcome extends AppCompatActivity {
@@ -169,13 +169,17 @@ public class Welcome extends AppCompatActivity {
 
     private void checkSharedPreferences(){
         Boolean mantraSet = mPreferences.getBoolean("mantraState", true);
-
+        Boolean themeSet = mPreferences.getBoolean("darkState", true);
         if(mantraSet == true){
             mantra_txt.setVisibility(View.VISIBLE);
         }else{
             mantra_txt.setVisibility(View.INVISIBLE);
         }
-
+        if (themeSet){
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 
 

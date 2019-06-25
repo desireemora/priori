@@ -72,16 +72,10 @@ public class Settings extends AppCompatActivity {
         swdarkMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (swdarkMode.isChecked()){
-                    mEditor.putString(getString(R.string.darkMode), "True");
-                    mEditor.apply();
-                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                mEditor.putBoolean("darkState", swdarkMode.isChecked()); // value to store
+                mEditor.apply();
+                checkSharedPreferences();
 
-                } else {
-                    mEditor.putString(getString(R.string.darkMode), "False");
-                    mEditor.apply();
-                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                }
             }
         });
 
@@ -89,21 +83,19 @@ public class Settings extends AppCompatActivity {
     }
 
     private void checkSharedPreferences(){
-        String themeSet = mPreferences.getString(getString(R.string.darkMode), "True");
+        Boolean themeSet = mPreferences.getBoolean("darkState", true);
         Boolean mantraSet = mPreferences.getBoolean("mantraState", true);
 
-        if (themeSet == "True") {
-            swdarkMode.setChecked(true);
+        if (themeSet) {
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             textdark.setText("DARK MODE ON");
             //Settings.this.recreate();
         } else {
-            swdarkMode.setChecked(false);
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             textdark.setText("DARK MODE OFF");
             // Settings.this.recreate();
         }
-
+        swdarkMode.setChecked(themeSet);
         swMantra.setChecked(mantraSet);
 
     }
