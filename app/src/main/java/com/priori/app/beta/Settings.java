@@ -12,7 +12,14 @@ import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class Settings extends AppCompatActivity {
+
+    private Button signout;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
 
     private Switch swdarkMode;
     private Switch swWeather;
@@ -26,6 +33,9 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         //Defining the variables we will use
+        signout = findViewById(R.id.signout_button);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
 
         swdarkMode = findViewById(R.id.sw_DarkMode);
         swMantra = findViewById(R.id.mantraSwitch);
@@ -86,6 +96,17 @@ public class Settings extends AppCompatActivity {
                 mEditor.apply();
                 checkSharedPreferences();
 
+            }
+        });
+
+        signout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(Settings.this, Login.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
 

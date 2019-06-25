@@ -29,16 +29,6 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        final Button registerButton = findViewById(R.id.btn_register);
-        registerButton.setEnabled(true);
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Register.this, Login.class);
-                startActivity(intent);
-            }
-        });
-
         email = findViewById(R.id.register_email);
         password = findViewById(R.id.register_password);
         confirm_password = findViewById(R.id.register_pass_confirm);
@@ -58,6 +48,9 @@ public class Register extends AppCompatActivity {
                         if(task.isSuccessful()){
                             Toast.makeText(Register.this, "Registration successful",
                                     Toast.LENGTH_LONG).show();
+
+                            Intent intent = new Intent(Register.this, Login.class);
+                            startActivity(intent);
                         }
 
                         else{
@@ -66,6 +59,8 @@ public class Register extends AppCompatActivity {
                         }
                     }
                 });
+
+
             }
         });
     }

@@ -17,8 +17,9 @@
         android:layout_marginRight="8dp"
         android:gravity="center"
         android:text="Why wait for tomorrow when you can accomplish it today."
-        android:textSize="30sp"
+        android:textSize="24sp"
         android:textStyle="italic"
+        app:fontFamily="@font/coustard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -21,6 +21,17 @@
     <string name="mantraCheck">true</string>
     <string name="register_button">register</string>
     <string name="login_button">Login</string>
+    <string name="dark_mode_label">Dark Mode</string>
+    <string name="mantra_label">Motivational Mantra</string>
+    <string name="import_calendar_button">Import Google Calendar</string>
+    <string name="fingerprint_label">Fingerprint Login</string>
+    <string name="weather_label">Weather Widget</string>
+    <string name="backup_label">Automatic Backup</string>
+    <string name="weather_location">Weather Location:</string>
+    <string name="welcome_default">Welcome Default:</string>
+    <string name="productivity_tracker">Productivity Tracker</string>
+    <string name="settings_label">Settings</string>
+    <string name="signout_button">Sign out</string>
 
 
 </resources>
