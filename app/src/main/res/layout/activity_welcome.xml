@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/weather_temp_text"
+        android:id="@+id/tv_weatherText"
         android:layout_width="50dp"
         android:layout_height="37dp"
         android:layout_marginStart="28dp"

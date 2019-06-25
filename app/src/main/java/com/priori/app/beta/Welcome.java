@@ -19,6 +19,7 @@ public class Welcome extends AppCompatActivity {
     static SharedPreferences mPreferences;
     static SharedPreferences.Editor mEditor;
     private TextView mantra_txt;
+    private TextView weather_txt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class Welcome extends AppCompatActivity {
 
         //Defining the variables we will use
         mantra_txt = findViewById(R.id.mantra_txt);
+        weather_txt = findViewById(R.id.tv_weatherText);
 
         //preferences sheet variables
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -100,86 +102,36 @@ public class Welcome extends AppCompatActivity {
             }
         });
 
-//        AsyncTask.execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                //TODO your background code
-//                //      The next section should call on a JSON parser
-//                String sURL = "http://api.openweathermap.org/data/2.5/weather?q=tampa&APPID=001ade5089a978cd383942ac275ac67c"; //just a string
-//
-//                // Connect to the URL using java's native library
-//                URL url = null;
-//
-//                try {
-//                    url = new URL(sURL);
-//                } catch (MalformedURLException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                URLConnection request = null;
-//
-//                try {
-//                    request = url.openConnection();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                try {
-//                    request.connect();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                // Convert to a JSON object to print data
-//                JsonParser jp = new JsonParser(); //from gson
-//                JsonElement root = null; //Convert the input stream to a json element
-//                try {
-//                    root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//                JsonObject rootObj = root.getAsJsonObject(); //May be an array, may be an object.
-//                String weather = rootObj.get("temp").getAsString(); //just grab the weather
-//
-//                TextView weather_view_text = (TextView)findViewById(R.id.weather_temp_text);
-//                weather_view_text.setText(weather);
-//            }
-//        });
-
-
-
-
     }
     protected void onResume(){
         super.onResume();
-//        checkTheme(mPreferences.getString(getString(R.string.darkMode), "False"));
 
-    }
-
-    void checkTheme(String dark){
-        if (dark == "True") {
-            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            //Settings.this.recreate();
-        } else {
-            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            // Settings.this.recreate();
-        }
     }
 
 
     private void checkSharedPreferences(){
         Boolean mantraSet = mPreferences.getBoolean("mantraState", true);
         Boolean themeSet = mPreferences.getBoolean("darkState", true);
+        Boolean weatherWidget = mPreferences.getBoolean("weatherWidget", true);
+
         if(mantraSet == true){
             mantra_txt.setVisibility(View.VISIBLE);
         }else{
             mantra_txt.setVisibility(View.INVISIBLE);
         }
+
         if (themeSet){
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
+
+        if (weatherWidget){
+            weather_txt.setVisibility(View.VISIBLE);
+        } else {
+            weather_txt.setVisibility(View.INVISIBLE);
+        }
+
     }
 
 

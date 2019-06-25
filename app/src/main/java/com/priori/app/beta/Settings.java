@@ -15,7 +15,7 @@ import android.widget.TextView;
 public class Settings extends AppCompatActivity {
 
     private Switch swdarkMode;
-    private TextView textdark;
+    private Switch swWeather;
     static SharedPreferences mPreferences;
     static SharedPreferences.Editor mEditor;
     private Switch swMantra;
@@ -26,9 +26,10 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         //Defining the variables we will use
-        textdark = findViewById(R.id.textView5);
+
         swdarkMode = findViewById(R.id.sw_DarkMode);
         swMantra = findViewById(R.id.mantraSwitch);
+        swWeather = findViewById(R.id.sw_weather);
 
         //preferences sheet variables
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -67,6 +68,15 @@ public class Settings extends AppCompatActivity {
                 mEditor.apply();
             }
         });
+        swWeather.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                mEditor.putBoolean("weatherWidget", swWeather.isChecked()); // value to store
+                mEditor.apply();
+            }
+        });
 
         //Switch dark mode toggle onclick listener
         swdarkMode.setOnClickListener(new View.OnClickListener() {
@@ -85,18 +95,18 @@ public class Settings extends AppCompatActivity {
     private void checkSharedPreferences(){
         Boolean themeSet = mPreferences.getBoolean("darkState", true);
         Boolean mantraSet = mPreferences.getBoolean("mantraState", true);
+        Boolean weatherSet = mPreferences.getBoolean("weatherWidget", true);
 
         if (themeSet) {
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            textdark.setText("DARK MODE ON");
             //Settings.this.recreate();
         } else {
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            textdark.setText("DARK MODE OFF");
             // Settings.this.recreate();
         }
         swdarkMode.setChecked(themeSet);
         swMantra.setChecked(mantraSet);
+        swWeather.setChecked(weatherSet);
 
     }
 }
