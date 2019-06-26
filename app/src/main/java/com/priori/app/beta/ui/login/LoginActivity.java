@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +28,8 @@ import com.priori.app.beta.Welcome;
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
+    static SharedPreferences mPreferences;
+    static SharedPreferences.Editor mEditor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,10 @@ public class LoginActivity extends AppCompatActivity {
         final Button registerButton = findViewById(R.id.btn_register);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
         registerButton.setEnabled(true);
+
+        //preferences sheet variables
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mPreferences.edit();
 
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
