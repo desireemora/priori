@@ -40,8 +40,8 @@ public class LoginActivity extends AppCompatActivity {
 
         final EditText usernameEditText = findViewById(R.id.prompt_email);
         final EditText passwordEditText = findViewById(R.id.prompt_password);
-        final Button loginButton = findViewById(R.id.btn_login);
-        final Button registerButton = findViewById(R.id.btn_register);
+        final Button loginButton = findViewById(R.id.login_button);
+        final Button registerButton = findViewById(R.id.register_button);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
         registerButton.setEnabled(true);
 

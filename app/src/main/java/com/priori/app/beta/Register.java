@@ -33,7 +33,7 @@ public class Register extends AppCompatActivity {
         password = findViewById(R.id.register_password);
         confirm_password = findViewById(R.id.register_pass_confirm);
         bday = findViewById(R.id.register_birthday);
-        register = findViewById(R.id.btn_register);
+        register = findViewById(R.id.register_button);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
