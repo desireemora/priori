@@ -95,7 +95,19 @@ public class Login extends AppCompatActivity{
         String usrEmail = mPreferences.getString("usrEmail", "");
         String usrPass = mPreferences.getString("usrPass", "");
         Boolean usrRememberCred = mPreferences.getBoolean("rememberCred", false);
+        Boolean fingerLockSet = mPreferences.getBoolean("fingerLockState", true);
+        Boolean themeSet = mPreferences.getBoolean("darkState", true);
 
+        if (themeSet) {
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            //Settings.this.recreate();
+        } else {
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            // Settings.this.recreate();
+        }
+        if (fingerLockSet){
+
+        }
         if (usrRememberCred) {
             email.setText(usrEmail);
             password.setText(usrPass);

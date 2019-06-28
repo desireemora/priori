@@ -20,6 +20,7 @@ public class Welcome extends AppCompatActivity {
     static SharedPreferences.Editor mEditor;
     private TextView mantra_txt;
     private TextView weather_txt;
+    private ImageButton btnTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,6 @@ public class Welcome extends AppCompatActivity {
         mEditor = mPreferences.edit();
 
         //checks for mantra visibility status
-        checkSharedPreferences();
 
 
 
@@ -93,7 +93,7 @@ public class Welcome extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        final ImageButton btnTracker = findViewById(R.id.btn_productivityTracker);
+        btnTracker = findViewById(R.id.btn_productivityTracker);
         btnTracker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,6 +101,7 @@ public class Welcome extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        checkSharedPreferences();
 
     }
     protected void onResume(){
@@ -113,6 +114,8 @@ public class Welcome extends AppCompatActivity {
         Boolean mantraSet = mPreferences.getBoolean("mantraState", true);
         Boolean themeSet = mPreferences.getBoolean("darkState", true);
         Boolean weatherWidget = mPreferences.getBoolean("weatherWidget", true);
+        Boolean backupSet = mPreferences.getBoolean("backupState", true);
+        Boolean trackerSet = mPreferences.getBoolean("trackerState", true);
 
         if(mantraSet == true){
             mantra_txt.setVisibility(View.VISIBLE);
@@ -130,6 +133,14 @@ public class Welcome extends AppCompatActivity {
             weather_txt.setVisibility(View.VISIBLE);
         } else {
             weather_txt.setVisibility(View.INVISIBLE);
+        }
+        if (backupSet){
+            //
+        }
+        if (trackerSet){
+            btnTracker.setVisibility(View.VISIBLE);
+        } else {
+            btnTracker.setVisibility(View.INVISIBLE);
         }
 
     }

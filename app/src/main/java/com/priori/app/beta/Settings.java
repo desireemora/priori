@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Switch;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,9 +22,14 @@ public class Settings extends AppCompatActivity {
 
     private Switch swdarkMode;
     private Switch swWeather;
+    private Switch swBackup;
+    private Switch swFingerLock;
+    private Switch swTracker;
+    private Switch swMantra;
+
     static SharedPreferences mPreferences;
     static SharedPreferences.Editor mEditor;
-    private Switch swMantra;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +42,11 @@ public class Settings extends AppCompatActivity {
         firebaseUser = firebaseAuth.getCurrentUser();
 
         swdarkMode = findViewById(R.id.sw_DarkMode);
-        swMantra = findViewById(R.id.mantraSwitch);
+        swMantra = findViewById(R.id.sw_mantraSwitch);
         swWeather = findViewById(R.id.sw_weather);
+        swBackup = findViewById(R.id.sw_backupswitch);
+        swTracker = findViewById(R.id.sw_Prodtracker);
+        swFingerLock = findViewById(R.id.sw_fingerprintLock);
 
         //preferences sheet variables
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -75,6 +82,33 @@ public class Settings extends AppCompatActivity {
             public void onClick(View v)
             {
                 mEditor.putBoolean("mantraState", swMantra.isChecked()); // value to store
+                mEditor.apply();
+            }
+        });
+        swTracker.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                mEditor.putBoolean("trackerState", swTracker.isChecked()); // value to store
+                mEditor.apply();
+            }
+        });
+        swBackup.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                mEditor.putBoolean("backupState", swBackup.isChecked()); // value to store
+                mEditor.apply();
+            }
+        });
+        swFingerLock.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                mEditor.putBoolean("fingerLockState", swFingerLock.isChecked()); // value to store
                 mEditor.apply();
             }
         });
@@ -114,9 +148,13 @@ public class Settings extends AppCompatActivity {
     }
 
     private void checkSharedPreferences(){
-        Boolean themeSet = mPreferences.getBoolean("darkState", true);
+
         Boolean mantraSet = mPreferences.getBoolean("mantraState", true);
         Boolean weatherSet = mPreferences.getBoolean("weatherWidget", true);
+        Boolean backupSet = mPreferences.getBoolean("backupState", true);
+        Boolean fingerLockSet = mPreferences.getBoolean("fingerLockState", true);
+        Boolean trackerSet = mPreferences.getBoolean("trackerState", true);
+        Boolean themeSet = mPreferences.getBoolean("darkState", true);
 
         if (themeSet) {
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -128,6 +166,9 @@ public class Settings extends AppCompatActivity {
         swdarkMode.setChecked(themeSet);
         swMantra.setChecked(mantraSet);
         swWeather.setChecked(weatherSet);
+        swBackup.setChecked(backupSet);
+        swFingerLock.setChecked(fingerLockSet);
+        swTracker.setChecked(trackerSet);
 
     }
 }
