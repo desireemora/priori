@@ -29,10 +29,9 @@
         android:layout_width="50dp"
         android:layout_height="37dp"
         android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
         android:layout_marginTop="28dp"
         android:gravity="center"
-        android:text="77º"
+        android:text="--º"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

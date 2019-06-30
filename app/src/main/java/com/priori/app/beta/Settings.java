@@ -30,6 +30,7 @@ public class Settings extends AppCompatActivity {
     private Switch swFingerLock;
     private Switch swTracker;
     private Switch swMantra;
+    private Button btnLocation;
 
     private FingerprintManager fingerprintmanager;
 
@@ -47,6 +48,7 @@ public class Settings extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
 
+        btnLocation = findViewById(R.id.btn_location);
         swdarkMode = findViewById(R.id.sw_DarkMode);
         swMantra = findViewById(R.id.sw_mantraSwitch);
         swWeather = findViewById(R.id.sw_weather);
@@ -57,6 +59,9 @@ public class Settings extends AppCompatActivity {
         //preferences sheet variables
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mPreferences.edit();
+
+        //checking the saved state of toggles
+        checkSharedPreferences();
 
         //Sending intents when the back button is clicked
         final ImageButton backButton = findViewById(R.id.btn_back);
@@ -77,8 +82,8 @@ public class Settings extends AppCompatActivity {
         });
 
 
-        //checking the saved state of toggles
-        checkSharedPreferences();
+
+
 //        Settings.this.recreate();
 
         //Switch mantra toggle onclick listener
@@ -171,6 +176,7 @@ public class Settings extends AppCompatActivity {
         Boolean fingerLockSet = mPreferences.getBoolean("fingerLockState", true);
         Boolean trackerSet = mPreferences.getBoolean("trackerState", true);
         Boolean themeSet = mPreferences.getBoolean("darkState", true);
+        String citySet = Settings.mPreferences.getString("citySetting", "Tampa, US");
 
         if (themeSet) {
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -185,6 +191,7 @@ public class Settings extends AppCompatActivity {
         swBackup.setChecked(backupSet);
         swFingerLock.setChecked(fingerLockSet);
         swTracker.setChecked(trackerSet);
+        btnLocation.setText(citySet);
 
     }
 }
