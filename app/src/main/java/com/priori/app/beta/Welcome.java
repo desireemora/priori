@@ -3,6 +3,7 @@ package com.priori.app.beta;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.Handler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,6 +31,7 @@ public class Welcome extends AppCompatActivity {
     private TextView mantra_txt;
     private TextView weather_txt;
     private ImageButton btnTracker;
+    private Handler handler = new Handler();
     /* Please Put your API KEY here */
     String OPEN_WEATHER_MAP_API = "001ade5089a978cd383942ac275ac67c";
 
@@ -114,10 +117,23 @@ public class Welcome extends AppCompatActivity {
         });
         checkSharedPreferences();
 
-        String citySet = mPreferences.getString("citySetting", "Tampa, US");
-        taskLoadUp(citySet);
+
+
+        handler.postDelayed(updateWeather,0);
+
 
     }
+    private Runnable updateWeather = new Runnable()
+    {
+        public void run()
+        {
+            //write here whaterver you want to repeat
+            String citySet = mPreferences.getString("citySetting", "Tampa, US");
+            taskLoadUp(citySet);
+            //10 Minutes refresh rate
+            handler.postDelayed(updateWeather,600000);
+        }
+    };
     protected void onResume(){
         super.onResume();
         checkSharedPreferences();
