@@ -1,13 +1,22 @@
 package com.priori.app.beta;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
-import android.text.Html;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -16,26 +25,27 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.security.SecureRandom;
 import java.text.DateFormat;
-import java.util.Date;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.support.v7.app.AlertDialog;
 
+import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 
 public class WeatherPage extends AppCompatActivity {
 
-    TextView selectCity, cityField, detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField;
+    TextView selectCity, cityField, detailsField, currentTemperatureField, weatherIcon;
     ProgressBar loader;
     Typeface weatherFont;
     String city = "Tampa";
     /* Please Put your API KEY here */
     String OPEN_WEATHER_MAP_API = "001ade5089a978cd383942ac275ac67c";
     /* Please Put your API KEY here */
+    private LocationManager locationManager;
+    private static final int MY_PERMISSION_REQUEST_LOCATION = 1;
 
 
     @Override
@@ -51,9 +61,7 @@ public class WeatherPage extends AppCompatActivity {
         currentTemperatureField = (TextView) findViewById(R.id.current_temperature_field);
 //            humidity_field = (TextView) findViewById(R.id.humidity_field);
 //            pressure_field = (TextView) findViewById(R.id.pressure_field);
-//            weatherIcon = (TextView) findViewById(R.id.weather_icon);
-//            weatherFont = Typeface.createFromAsset(getAssets(), "assets/fonts/weathericons-regular-webfont.ttf");
-//            weatherIcon.setTypeface(weatherFont);
+
         checkSharedPreferences();
         taskLoadUp(city);
 
@@ -94,7 +102,61 @@ public class WeatherPage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        final ImageButton getLocation = findViewById(R.id.btn_getLocation);
+        getLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                if (ActivityCompat.checkSelfPermission(WeatherPage.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                    if(ActivityCompat.shouldShowRequestPermissionRationale(WeatherPage.this, Manifest.permission.ACCESS_COARSE_LOCATION)){
+                        ActivityCompat.requestPermissions(WeatherPage.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSION_REQUEST_LOCATION);
+                    } else {
+                        ActivityCompat.requestPermissions(WeatherPage.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSION_REQUEST_LOCATION);
+                    }
+
+                } else {
+                    locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                    Location location = locationManager.getLastKnownLocation(locationManager.NETWORK_PROVIDER);
+                    try{
+                        cityField.setText(hereLocation(location.getLatitude(), location.getLongitude()));
+                        city = (String) cityField.getText();
+                        taskLoadUp(city);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(WeatherPage.this, "Not Found!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+
+
+
+            }
+        });
+    }
+
+    public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults){
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case MY_PERMISSION_REQUEST_LOCATION:{
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    if (ContextCompat.checkSelfPermission(WeatherPage.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                        Location location = locationManager.getLastKnownLocation(locationManager.NETWORK_PROVIDER);
+                        try{
+                            cityField.setText(hereLocation(location.getLatitude(), location.getLongitude()));
+                            city = (String) cityField.getText();
+                            taskLoadUp(city);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(WeatherPage.this, "Not Found!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } else {
+                    Toast.makeText(this, "No permission Granted!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
 
 
@@ -152,6 +214,21 @@ public class WeatherPage extends AppCompatActivity {
         }
 
 
+    }
+    public String hereLocation(double lat, double lon){
+        String curCity= "";
+
+        Geocoder geocoder = new Geocoder(WeatherPage.this, Locale.getDefault());
+        List<Address> addressList;
+        try{
+            addressList = geocoder.getFromLocation(lat,lon,1);
+            if (addressList.size() > 0){
+                curCity = addressList.get(0).getLocality();
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return curCity;
     }
     private void checkSharedPreferences(){
 

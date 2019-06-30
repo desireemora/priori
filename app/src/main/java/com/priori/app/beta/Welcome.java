@@ -2,6 +2,7 @@ package com.priori.app.beta;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
@@ -45,6 +46,9 @@ public class Welcome extends AppCompatActivity {
         //Defining the variables we will use
         mantra_txt = findViewById(R.id.mantra_txt);
         weather_txt = findViewById(R.id.tv_weatherText);
+//        weatherIcon = (TextView) findViewById(R.id.tv_WeatherIcon);
+//        weatherFont = Typeface.createFromAsset(getAssets(), "font/weathericonswebfont.ttf");
+//        weatherIcon.setTypeface(weatherFont);
 
 
         //preferences sheet variables
