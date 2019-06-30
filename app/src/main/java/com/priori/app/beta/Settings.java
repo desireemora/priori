@@ -1,8 +1,12 @@
 package com.priori.app.beta;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.hardware.fingerprint.FingerprintManager;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
@@ -26,6 +30,8 @@ public class Settings extends AppCompatActivity {
     private Switch swFingerLock;
     private Switch swTracker;
     private Switch swMantra;
+
+    private FingerprintManager fingerprintmanager;
 
     static SharedPreferences mPreferences;
     static SharedPreferences.Editor mEditor;
@@ -112,6 +118,7 @@ public class Settings extends AppCompatActivity {
                 mEditor.apply();
             }
         });
+
         swWeather.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -143,7 +150,16 @@ public class Settings extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        fingerprintmanager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
+        if (!fingerprintmanager.isHardwareDetected()){
+            mEditor.putBoolean("fingerLockState", false); // value to store
+            mEditor.apply();
+            swFingerLock.setClickable(false);
+            swFingerLock.setChecked(false);
+            swFingerLock.setEnabled(false);
+        } else if (ContextCompat.checkSelfPermission(this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED){
 
+        }
 
     }
 
