@@ -26,18 +26,24 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
     @Override
     public void onAuthenticationError(int errorCode, CharSequence errString) {
-        this.update("There was an Auth Error. " + errString, false);
+        this.update("" + errString, false);
     }
 
     @Override
     public void onAuthenticationHelp(int helpCode, CharSequence helpString) {
-        this.update("Authentication failed. " + helpString, false);
+        this.update("" + helpString, false);
     }
 
     @Override
     public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
         this.update("You can now access the app.", true);
     }
+
+    @Override
+    public void onAuthenticationFailed() {
+        this.update("Access Denied", false);
+    }
+
     private void update(String s, boolean b){
         TextView txtfingerprint = ((Activity)context).findViewById(R.id.tv_fingerprint);
         ImageButton fingBtn = ((Activity)context).findViewById(R.id.ibtn_fingerprint);

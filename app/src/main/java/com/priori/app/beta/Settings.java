@@ -132,33 +132,24 @@ public class Settings extends AppCompatActivity {
                         if (!fingerprintmanager.isHardwareDetected()) {
                             mEditor.putBoolean("fingerLockState", false); // value to store
                             mEditor.apply();
-                            swFingerLock.setClickable(false);
                             swFingerLock.setChecked(false);
-                            swFingerLock.setEnabled(false);
                             Toast.makeText(Settings.this, "Fingerprint Scanner Hardware Missing", Toast.LENGTH_LONG).show();
                         } else if (ContextCompat.checkSelfPermission(Settings.this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
                             mEditor.putBoolean("fingerLockState", false); // value to store
                             mEditor.apply();
-                            swFingerLock.setClickable(false);
                             swFingerLock.setChecked(false);
-                            swFingerLock.setEnabled(false);
                             Toast.makeText(Settings.this, "Permission not granted", Toast.LENGTH_LONG).show();
                         } else if (!keyguardManager.isKeyguardSecure()){
                             mEditor.putBoolean("fingerLockState", false); // value to store
                             mEditor.apply();
-                            swFingerLock.setClickable(false);
                             swFingerLock.setChecked(false);
-                            swFingerLock.setEnabled(false);
                             Toast.makeText(Settings.this, "You need to add fingerprint Lock to your phone in Settings", Toast.LENGTH_LONG).show();
                         } else if (!fingerprintmanager.hasEnrolledFingerprints()){
                             mEditor.putBoolean("fingerLockState", false); // value to store
                             mEditor.apply();
-                            swFingerLock.setClickable(false);
                             swFingerLock.setChecked(false);
-                            swFingerLock.setEnabled(false);
                             Toast.makeText(Settings.this, "You should add at least one fingerprint to use this feature", Toast.LENGTH_LONG).show();
                         } else {
-
                             mEditor.putBoolean("fingerLockState", swFingerLock.isChecked()); // value to store
                             mEditor.apply();
                             Toast.makeText(Settings.this, "You need have successfully enabled Fingerprint Lock!", Toast.LENGTH_LONG).show();
