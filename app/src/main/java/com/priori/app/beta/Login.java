@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +29,9 @@ public class Login extends AppCompatActivity{
     private CheckBox rememberCred;
     static SharedPreferences mPreferences;
     static SharedPreferences.Editor mEditor;
+    private ProgressBar loadingBar;
+    private ImageButton btnFingerprint;
+    private TextView txtFingerprint;
 
     private FirebaseAuth firebaseAuth;
 
@@ -41,11 +47,19 @@ public class Login extends AppCompatActivity{
         password = findViewById(R.id.prompt_password);
         login = findViewById(R.id.login_button);
         rememberCred = findViewById(R.id.cb_remember);
+        loadingBar = findViewById(R.id.progressBar);
+        loadingBar.setVisibility(View.GONE);
+        btnFingerprint = findViewById(R.id.ibtn_fingerprint);
+        btnFingerprint.setVisibility(View.GONE);
+        txtFingerprint = findViewById(R.id.tv_fingerprint);
+        txtFingerprint.setVisibility(View.GONE);
+
         checkSharedPreferences();
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadingBar.setVisibility(View.VISIBLE);
                 firebaseAuth.signInWithEmailAndPassword(email.getText().toString(),
                         password.getText().toString())
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -63,10 +77,12 @@ public class Login extends AppCompatActivity{
                                 mEditor.putBoolean("rememberCred", false);
                                 mEditor.apply();
                             }
+                            loadingBar.setVisibility(View.GONE);
                             startActivity(new Intent(Login.this, Welcome.class) );
                         }
 
                         else{
+                            loadingBar.setVisibility(View.GONE);
                             Toast.makeText(Login.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
@@ -106,7 +122,8 @@ public class Login extends AppCompatActivity{
             // Settings.this.recreate();
         }
         if (fingerLockSet){
-
+            txtFingerprint.setVisibility(View.VISIBLE);
+            btnFingerprint.setVisibility(View.VISIBLE);
         }
         if (usrRememberCred) {
             email.setText(usrEmail);

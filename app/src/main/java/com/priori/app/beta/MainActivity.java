@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 1000);
     }
-
+    protected void onResume() {
+        super.onResume();
+    }
 
 }
