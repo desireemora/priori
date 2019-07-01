@@ -2,6 +2,7 @@ package com.priori.app.beta;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.fingerprint.FingerprintManager;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +35,8 @@ public class Login extends AppCompatActivity{
     private TextView txtFingerprint;
 
     private FirebaseAuth firebaseAuth;
+
+    private FingerprintManager fingerprintmanager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,9 +102,11 @@ public class Login extends AppCompatActivity{
 
             }
         });
+        fingerprintmanager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
+        FingerprintHandler fingerprintHandler = new FingerprintHandler(this);
+        fingerprintHandler.startAuth(fingerprintmanager, null);
+
     }
-
-
 
     public void registerUser(View view){
         Intent intent = new Intent(this, Register.class);

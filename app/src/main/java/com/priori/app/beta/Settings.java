@@ -1,10 +1,12 @@
 package com.priori.app.beta;
 
 import android.Manifest;
+import android.app.KeyguardManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +20,8 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Set;
 
 public class Settings extends AppCompatActivity {
 
@@ -34,6 +38,7 @@ public class Settings extends AppCompatActivity {
     private Button btnLocation;
 
     private FingerprintManager fingerprintmanager;
+    private KeyguardManager keyguardManager;
 
     static SharedPreferences mPreferences;
     static SharedPreferences.Editor mEditor;
@@ -120,8 +125,51 @@ public class Settings extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                mEditor.putBoolean("fingerLockState", swFingerLock.isChecked()); // value to store
-                mEditor.apply();
+                if (swFingerLock.isChecked()){
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+                        fingerprintmanager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
+                        if (!fingerprintmanager.isHardwareDetected()) {
+                            mEditor.putBoolean("fingerLockState", false); // value to store
+                            mEditor.apply();
+                            swFingerLock.setClickable(false);
+                            swFingerLock.setChecked(false);
+                            swFingerLock.setEnabled(false);
+                            Toast.makeText(Settings.this, "Fingerprint Scanner Hardware Missing", Toast.LENGTH_LONG).show();
+                        } else if (ContextCompat.checkSelfPermission(Settings.this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
+                            mEditor.putBoolean("fingerLockState", false); // value to store
+                            mEditor.apply();
+                            swFingerLock.setClickable(false);
+                            swFingerLock.setChecked(false);
+                            swFingerLock.setEnabled(false);
+                            Toast.makeText(Settings.this, "Permission not granted", Toast.LENGTH_LONG).show();
+                        } else if (!keyguardManager.isKeyguardSecure()){
+                            mEditor.putBoolean("fingerLockState", false); // value to store
+                            mEditor.apply();
+                            swFingerLock.setClickable(false);
+                            swFingerLock.setChecked(false);
+                            swFingerLock.setEnabled(false);
+                            Toast.makeText(Settings.this, "You need to add fingerprint Lock to your phone in Settings", Toast.LENGTH_LONG).show();
+                        } else if (!fingerprintmanager.hasEnrolledFingerprints()){
+                            mEditor.putBoolean("fingerLockState", false); // value to store
+                            mEditor.apply();
+                            swFingerLock.setClickable(false);
+                            swFingerLock.setChecked(false);
+                            swFingerLock.setEnabled(false);
+                            Toast.makeText(Settings.this, "You should add at least one fingerprint to use this feature", Toast.LENGTH_LONG).show();
+                        } else {
+
+                            mEditor.putBoolean("fingerLockState", swFingerLock.isChecked()); // value to store
+                            mEditor.apply();
+                            Toast.makeText(Settings.this, "You need have successfully enabled Fingerprint Lock!", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                } else {
+                    mEditor.putBoolean("fingerLockState", swFingerLock.isChecked()); // value to store
+                    mEditor.apply();
+                    Toast.makeText(Settings.this, "You need have successfully disabled Fingerprint Lock!", Toast.LENGTH_LONG).show();
+
+                }
             }
         });
 
@@ -156,17 +204,6 @@ public class Settings extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        fingerprintmanager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
-        if (!fingerprintmanager.isHardwareDetected()){
-            mEditor.putBoolean("fingerLockState", false); // value to store
-            mEditor.apply();
-            swFingerLock.setClickable(false);
-            swFingerLock.setChecked(false);
-            swFingerLock.setEnabled(false);
-        } else if (ContextCompat.checkSelfPermission(this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED){
-
-        }
-
     }
 
     private void checkSharedPreferences(){

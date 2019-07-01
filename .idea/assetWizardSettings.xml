@@ -99,9 +99,9 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="backgroundColor" value="4fbcff" />
+                                      <entry key="backgroundColor" value="ff564d" />
                                       <entry key="iconShape" value="CIRCLE" />
-                                      <entry key="outputName" value="fingerprint" />
+                                      <entry key="outputName" value="fingererror" />
                                     </map>
                                   </option>
                                 </PersistentState>
