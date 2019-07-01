@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.*;
 
-public class MainActivity extends AppCompatActivity {
+public class Splash extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             public void run(){
                 // do something
-                Intent intent = new Intent(MainActivity.this, Login.class);
+                Intent intent = new Intent(Splash.this, Login.class);
                 // If you just use this that is not a valid context. Use ActivityName.this
                 startActivity(intent);
             }

@@ -276,21 +276,6 @@
         app:layout_constraintTop_toBottomOf="@+id/sw_Prodtracker" />
 
     <Button
-        android:id="@+id/btn_viewdefault"
-        android:layout_width="126dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="TOP 5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.91"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_location" />
-
-    <Button
         android:id="@+id/import_calendar_button"
         android:layout_width="348dp"
         android:layout_height="56dp"
@@ -323,5 +308,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/import_calendar_button"
         app:layout_constraintVertical_bias="0.204" />
+
+    <Spinner
+        android:id="@+id/sp_list"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.452"
+        app:layout_constraintStart_toEndOf="@+id/welcome_default"
+        app:layout_constraintTop_toBottomOf="@+id/btn_location" />
 
 </android.support.constraint.ConstraintLayout>

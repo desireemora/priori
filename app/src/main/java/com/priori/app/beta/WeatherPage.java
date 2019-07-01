@@ -71,7 +71,7 @@ public class WeatherPage extends AppCompatActivity {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(WeatherPage.this);
                 alertDialog.setTitle("Change City");
                 final EditText input = new EditText(WeatherPage.this);
-                input.setText(city);
+                input.setHint(city);
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT);
@@ -208,6 +208,8 @@ public class WeatherPage extends AppCompatActivity {
                 }
             } catch (JSONException e) {
                 Toast.makeText(getApplicationContext(), "Error, Check City", Toast.LENGTH_SHORT).show();
+                loader.setVisibility(View.GONE);
+                city = (String) cityField.getText();
             }
 
 

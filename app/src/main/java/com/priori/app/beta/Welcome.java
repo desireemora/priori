@@ -121,11 +121,6 @@ public class Welcome extends AppCompatActivity {
         });
         checkSharedPreferences();
 
-
-
-        handler.postDelayed(updateWeather,0);
-
-
     }
     private Runnable updateWeather = new Runnable()
     {
@@ -208,6 +203,7 @@ public class Welcome extends AppCompatActivity {
 
         if (weatherWidget){
             weather_txt.setVisibility(View.VISIBLE);
+            handler.postDelayed(updateWeather,0);
         } else {
             weather_txt.setVisibility(View.INVISIBLE);
         }

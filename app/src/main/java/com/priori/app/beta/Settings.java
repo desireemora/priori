@@ -13,14 +13,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Locale;
 import java.util.Set;
 
 public class Settings extends AppCompatActivity {
@@ -29,6 +33,7 @@ public class Settings extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
 
+    private Spinner listSpinner;
     private Switch swdarkMode;
     private Switch swWeather;
     private Switch swBackup;
@@ -61,6 +66,14 @@ public class Settings extends AppCompatActivity {
         swBackup = findViewById(R.id.sw_backupswitch);
         swTracker = findViewById(R.id.sw_Prodtracker);
         swFingerLock = findViewById(R.id.sw_fingerprintLock);
+        listSpinner = findViewById(R.id.sp_list);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+        adapter.add("TOP 5");
+        adapter.add("Calendar");
+        adapter.add("Daily");
+        listSpinner.setAdapter(adapter);
+
 
         //preferences sheet variables
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -69,6 +82,8 @@ public class Settings extends AppCompatActivity {
         //checking the saved state of toggles
         checkSharedPreferences();
 
+
+        listSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener());
         //Sending intents when the back button is clicked
         final ImageButton backButton = findViewById(R.id.btn_back);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -88,45 +103,35 @@ public class Settings extends AppCompatActivity {
         });
 
 
-
-
 //        Settings.this.recreate();
 
         //Switch mantra toggle onclick listener
-        swMantra.setOnClickListener(new View.OnClickListener()
-        {
+        swMantra.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 mEditor.putBoolean("mantraState", swMantra.isChecked()); // value to store
                 mEditor.apply();
             }
         });
-        swTracker.setOnClickListener(new View.OnClickListener()
-        {
+        swTracker.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 mEditor.putBoolean("trackerState", swTracker.isChecked()); // value to store
                 mEditor.apply();
             }
         });
-        swBackup.setOnClickListener(new View.OnClickListener()
-        {
+        swBackup.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 mEditor.putBoolean("backupState", swBackup.isChecked()); // value to store
                 mEditor.apply();
             }
         });
-        swFingerLock.setOnClickListener(new View.OnClickListener()
-        {
+        swFingerLock.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                if (swFingerLock.isChecked()){
-                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            public void onClick(View v) {
+                if (swFingerLock.isChecked()) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
                         fingerprintmanager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
                         if (!fingerprintmanager.isHardwareDetected()) {
@@ -139,12 +144,12 @@ public class Settings extends AppCompatActivity {
                             mEditor.apply();
                             swFingerLock.setChecked(false);
                             Toast.makeText(Settings.this, "Permission not granted", Toast.LENGTH_LONG).show();
-                        } else if (!keyguardManager.isKeyguardSecure()){
+                        } else if (!keyguardManager.isKeyguardSecure()) {
                             mEditor.putBoolean("fingerLockState", false); // value to store
                             mEditor.apply();
                             swFingerLock.setChecked(false);
                             Toast.makeText(Settings.this, "You need to add fingerprint Lock to your phone in Settings", Toast.LENGTH_LONG).show();
-                        } else if (!fingerprintmanager.hasEnrolledFingerprints()){
+                        } else if (!fingerprintmanager.hasEnrolledFingerprints()) {
                             mEditor.putBoolean("fingerLockState", false); // value to store
                             mEditor.apply();
                             swFingerLock.setChecked(false);
@@ -164,11 +169,9 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        swWeather.setOnClickListener(new View.OnClickListener()
-        {
+        swWeather.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 mEditor.putBoolean("weatherWidget", swWeather.isChecked()); // value to store
                 mEditor.apply();
             }
@@ -197,7 +200,7 @@ public class Settings extends AppCompatActivity {
         });
     }
 
-    private void checkSharedPreferences(){
+    private void checkSharedPreferences() {
 
         Boolean mantraSet = mPreferences.getBoolean("mantraState", true);
         Boolean weatherSet = mPreferences.getBoolean("weatherWidget", true);
@@ -205,7 +208,8 @@ public class Settings extends AppCompatActivity {
         Boolean fingerLockSet = mPreferences.getBoolean("fingerLockState", true);
         Boolean trackerSet = mPreferences.getBoolean("trackerState", true);
         Boolean themeSet = mPreferences.getBoolean("darkState", true);
-        String citySet = Settings.mPreferences.getString("citySetting", "Tampa, US");
+        String citySet = mPreferences.getString("citySetting", "Tampa, US");
+        Integer defaultView = mPreferences.getInt("defaultView", 0);
 
         if (themeSet) {
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -221,6 +225,20 @@ public class Settings extends AppCompatActivity {
         swFingerLock.setChecked(fingerLockSet);
         swTracker.setChecked(trackerSet);
         btnLocation.setText(citySet);
+        listSpinner.setSelection(defaultView);
 
+    }
+
+    private class CustomOnItemSelectedListener implements android.widget.AdapterView.OnItemSelectedListener {
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            mEditor.putInt("defaultView",pos);
+            mEditor.apply();
+            mEditor.commit();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> arg0) {
+            // TODO Auto-generated method stub
+        }
     }
 }
