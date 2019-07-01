@@ -33,6 +33,9 @@ public class Welcome extends AppCompatActivity {
     private TextView weather_txt;
     private ImageButton btnTracker;
     private Handler handler = new Handler();
+    private CalendarView cal;
+    private LinearLayout listView;
+    private TextView viewTitle;
     /* Please Put your API KEY here */
     String OPEN_WEATHER_MAP_API = "001ade5089a978cd383942ac275ac67c";
 
@@ -69,38 +72,30 @@ public class Welcome extends AppCompatActivity {
             }
         });
 
-        final CalendarView cal = findViewById(R.id.cv_calendar);
+        cal = findViewById(R.id.cv_calendar);
         cal.setDate(System.currentTimeMillis(),true,true);
         final Button btnCalendar = findViewById(R.id.btnCalendar);
-        final LinearLayout listView = findViewById(R.id.lv_ListView);
+        listView = findViewById(R.id.lv_ListView);
         cal.setVisibility(View.GONE);
-        final TextView viewTitle = findViewById(R.id.tv_listTitle);
-        viewTitle.setText("TOP 5");
+        viewTitle = findViewById(R.id.tv_listTitle);
         btnCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cal.setVisibility(View.VISIBLE);
-                listView.setVisibility(View.GONE);
-                viewTitle.setText("");
-
+                calendarView();
             }
         });
         final Button btnDaily = findViewById(R.id.btnDaily);
         btnDaily.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cal.setVisibility(View.GONE);
-                listView.setVisibility(View.VISIBLE);
-                viewTitle.setText("Daily");
+                dailyView();
             }
         });
         final Button btnTop = findViewById(R.id.btn_top5);
         btnTop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cal.setVisibility(View.GONE);
-                listView.setVisibility(View.VISIBLE);
-                viewTitle.setText("TOP 5");
+                top5View();
             }
         });
         final ImageButton btnAddTask = findViewById(R.id.btn_addtask);
@@ -121,6 +116,21 @@ public class Welcome extends AppCompatActivity {
         });
         checkSharedPreferences();
 
+    }
+    private void calendarView(){
+        cal.setVisibility(View.VISIBLE);
+        listView.setVisibility(View.GONE);
+        viewTitle.setText("");
+    }
+    private void top5View(){
+        cal.setVisibility(View.GONE);
+        listView.setVisibility(View.VISIBLE);
+        viewTitle.setText("TOP 5");
+    }
+    private void dailyView(){
+        cal.setVisibility(View.GONE);
+        listView.setVisibility(View.VISIBLE);
+        viewTitle.setText("Daily");
     }
     private Runnable updateWeather = new Runnable()
     {
@@ -188,7 +198,15 @@ public class Welcome extends AppCompatActivity {
         Boolean weatherWidget = mPreferences.getBoolean("weatherWidget", true);
         Boolean backupSet = mPreferences.getBoolean("backupState", true);
         Boolean trackerSet = mPreferences.getBoolean("trackerState", true);
+        Integer defaultView = mPreferences.getInt("defaultView", 0);
 
+        if (defaultView == 0){
+            top5View();
+        } else if (defaultView == 1){
+            calendarView();
+        } else {
+            dailyView();
+        }
         if(mantraSet == true){
             mantra_txt.setVisibility(View.VISIBLE);
         }else{
