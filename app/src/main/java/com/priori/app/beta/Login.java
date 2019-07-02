@@ -102,9 +102,7 @@ public class Login extends AppCompatActivity{
 
             }
         });
-        fingerprintmanager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
-        FingerprintHandler fingerprintHandler = new FingerprintHandler(this);
-        fingerprintHandler.startAuth(fingerprintmanager, null);
+
 
     }
 
@@ -129,6 +127,9 @@ public class Login extends AppCompatActivity{
         if (fingerLockSet){
             txtFingerprint.setVisibility(View.VISIBLE);
             btnFingerprint.setVisibility(View.VISIBLE);
+            fingerprintmanager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
+            FingerprintHandler fingerprintHandler = new FingerprintHandler(this);
+            fingerprintHandler.startAuth(fingerprintmanager, null);
         }
         if (usrRememberCred) {
             email.setText(usrEmail);
