@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_bg"
-    tools:context=".MainActivity" >
+    tools:context=".Splash" >
 
     <ImageView
         android:id="@+id/logo"
@@ -15,5 +15,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_logo" />
+        app:srcCompat="@drawable/ic_logo"
+        android:contentDescription="@string/todo" />
 </android.support.constraint.ConstraintLayout>

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "608585163588",
+    "firebase_url": "https://priori-27b18.firebaseio.com",
+    "project_id": "priori-27b18",
+    "storage_bucket": "priori-27b18.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:608585163588:android:1275427ac1e355e3",
+        "android_client_info": {
+          "package_name": "com.priori.app.beta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "608585163588-0is57j9lncj9rrtcv5428cgq3podcqam.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.priori.app.beta",
+            "certificate_hash": "ece854a58f28e87190377db78171416e6a182e7f"
+          }
+        },
+        {
+          "client_id": "608585163588-0cskb4tqob7q91t1n7gm5621ragnc2p8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1ygzbQe7rxyUS_uDio6LoPcTy7pAfMmA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "608585163588-0cskb4tqob7q91t1n7gm5621ragnc2p8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

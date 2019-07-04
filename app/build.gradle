@@ -3,8 +3,8 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "desireemora.mail.usf.jarvis_beta"
-        minSdkVersion 15
+        applicationId "com.priori.app.beta"
+        minSdkVersion 23
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -25,7 +25,17 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support:support-annotations:28.0.0'
     implementation 'android.arch.lifecycle:extensions:1.1.1'
+    implementation 'com.google.firebase:firebase-auth:16.0.5'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation 'com.google.firebase:firebase-core:16.0.9'
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation  "android.arch.persistence.room:runtime:1.0.0"
+    annotationProcessor  "android.arch.persistence.room:compiler:1.0.0"
+
+
 }
+
+apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
+
