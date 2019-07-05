@@ -1,5 +1,6 @@
 package com.priori.app.beta;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -18,10 +19,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Handler;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -36,6 +41,8 @@ public class Welcome extends AppCompatActivity {
     private CalendarView cal;
     private LinearLayout listView;
     private TextView viewTitle;
+    public static PrioriDB prioriDB;
+    FirebaseAuth firebaseAuth;
     /* Please Put your API KEY here */
     String OPEN_WEATHER_MAP_API = "001ade5089a978cd383942ac275ac67c";
 
@@ -45,6 +52,9 @@ public class Welcome extends AppCompatActivity {
         // beginning of working code
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         //Defining the variables we will use
         mantra_txt = findViewById(R.id.mantra_txt);
@@ -59,6 +69,8 @@ public class Welcome extends AppCompatActivity {
         mEditor = mPreferences.edit();
 
         //checks for mantra visibility status
+        prioriDB = Room.databaseBuilder(getApplicationContext(),PrioriDB.class,"taskdb").allowMainThreadQueries().build();
+
 
 
 
@@ -76,6 +88,63 @@ public class Welcome extends AppCompatActivity {
         cal.setDate(System.currentTimeMillis(),true,true);
         final Button btnCalendar = findViewById(R.id.btnCalendar);
         listView = findViewById(R.id.lv_ListView);
+
+        List<TaskDB> mytasks;
+        mytasks = Welcome.prioriDB.myTaskDai().getTasks();
+        String holdTasks ="";
+        int count = 0;
+
+        TextView blank = findViewById(R.id.space);
+        blank.setText("");
+        TextView tsk1_view = findViewById(R.id.task1);
+        TextView tsk2_view = findViewById(R.id.task2);
+        TextView tsk3_view = findViewById(R.id.task3);
+        TextView tsk4_view = findViewById(R.id.task4);
+        TextView tsk5_view = findViewById(R.id.task5);
+
+        for(TaskDB tsk : mytasks){
+            count = count + 1;
+
+            //if(tsk.getUserID() == user.getUid()) {
+
+                holdTasks = tsk.getTaskName() + " " + tsk.getDueDate() + " "+ tsk.getDueTime();
+
+                switch(count){
+                    case 1:
+                        tsk1_view.setText(holdTasks);
+                        break;
+                    case 2:
+                        tsk2_view.setText(holdTasks);
+                        break;
+                    case 3:
+                        tsk3_view.setText(holdTasks);
+                        break;
+                    case 4:
+                        tsk4_view.setText(holdTasks);
+                        break;
+                    case 5:
+                        tsk5_view.setText(holdTasks);
+                        break;
+
+                }
+
+
+
+
+            //}
+
+
+            if (count == 5) {
+                break;
+            }
+
+        }
+
+
+
+
+
+
         cal.setVisibility(View.GONE);
         viewTitle = findViewById(R.id.tv_listTitle);
         btnCalendar.setOnClickListener(new View.OnClickListener() {
