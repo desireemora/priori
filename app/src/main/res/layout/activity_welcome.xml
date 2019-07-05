@@ -176,6 +176,16 @@
             android:gravity="center"
             android:text="TextView"
             android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn_tsk1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Calendar" />
+
         <TextView
             android:id="@+id/space"
             android:layout_width="match_parent"
@@ -186,11 +196,12 @@
 
         <TextView
             android:id="@+id/task1"
-            android:layout_width="match_parent"
+            android:layout_width="234dp"
             android:layout_height="43dp"
             android:gravity="center"
             android:text="TextView"
             android:textSize="18sp" />
+
         <TextView
             android:id="@+id/task2"
             android:layout_width="match_parent"

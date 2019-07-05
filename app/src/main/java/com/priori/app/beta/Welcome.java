@@ -97,10 +97,17 @@ public class Welcome extends AppCompatActivity {
         TextView blank = findViewById(R.id.space);
         blank.setText("");
         TextView tsk1_view = findViewById(R.id.task1);
+        tsk1_view.setText("");
         TextView tsk2_view = findViewById(R.id.task2);
+        tsk2_view.setText("");
         TextView tsk3_view = findViewById(R.id.task3);
+        tsk3_view.setText("");
         TextView tsk4_view = findViewById(R.id.task4);
+        tsk4_view.setText("");
         TextView tsk5_view = findViewById(R.id.task5);
+        tsk5_view.setText("");
+
+
 
         for(TaskDB tsk : mytasks){
             count = count + 1;
