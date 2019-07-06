@@ -1,12 +1,14 @@
 package com.priori.app.beta;
 
 import android.arch.persistence.room.Room;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
@@ -26,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -35,7 +38,7 @@ public class Welcome extends AppCompatActivity {
 
     static SharedPreferences mPreferences;
     static SharedPreferences.Editor mEditor;
-    private TextView mantra_txt;
+    public TextView mantra_txt;
     private TextView weather_txt;
     private ImageButton btnTracker;
     private Handler handler = new Handler();
@@ -44,10 +47,6 @@ public class Welcome extends AppCompatActivity {
     private TextView viewTitle;
     public static PrioriDB prioriDB;
     FirebaseAuth firebaseAuth;
-
-    //Mantra Array
-    Random rand = new Random();
-    int n = rand.nextInt(53); // Gives n such that 0 <= n < 53
 
     String[] mantraArray = {"“The Way Get Started Is To Quit Talking And Begin Doing.” – Walt Disney",
             "“The Pessimist Sees Difficulty In Every Opportunity. The Optimist Sees Opportunity In Every Difficulty.” – Winston Churchill",
@@ -95,7 +94,7 @@ public class Welcome extends AppCompatActivity {
 
         //Defining the variables we will use
         mantra_txt = findViewById(R.id.mantra_txt);
-        mantra_txt.setText(mantraArray[n]);
+        //mantra_txt.setText(mantraArray[n]);
         weather_txt = findViewById(R.id.tv_weatherText);
 //        weatherIcon = (TextView) findViewById(R.id.tv_WeatherIcon);
 //        weatherFont = Typeface.createFromAsset(getAssets(), "font/weathericonswebfont.ttf");
@@ -230,7 +229,79 @@ public class Welcome extends AppCompatActivity {
         });
         checkSharedPreferences();
 
+        tsk1_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(Welcome.this);
+
+                //message and title
+                builder.setMessage("Is this task completed?")
+                        .setTitle("Complete Task");
+                // Add the buttons
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+
+                // Create the AlertDialog
+                AlertDialog dialog = builder.create();
+            }
+
+        });
+
+
+
+
+        //*********** mantra random start **********************
+        Calendar cal = Calendar.getInstance();
+        int curr_date = cal.get(Calendar.DAY_OF_MONTH);
+        SharedPreferences set = getSharedPreferences("PREF",0);
+        String set_lastQ = mPreferences.getString("last_quote","");
+        int last_day = set.getInt("day_new",0);
+
+        if(last_day != curr_date){
+            SharedPreferences.Editor edit = set.edit();
+            edit.putInt("day_new",curr_date);
+            edit.commit();
+
+            //Mantra random
+            Random rand = new Random();
+            int n = rand.nextInt(53); // Gives n such that 0 <= n < 53
+            mantra_txt.setText(mantraArray[n]);
+
+            mEditor.putString("last_quote",mantraArray[n]);
+            mEditor.commit();
+
+        }
+        else{
+            mantra_txt.setText(mPreferences.getString("last_quote",""));
+        }
+        //*********** mantra random end ************************
+
+
+
+
     }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+
+
+    }
+
+
+
+
+
+
     private void calendarView(){
         cal.setVisibility(View.VISIBLE);
         listView.setVisibility(View.GONE);
@@ -270,6 +341,10 @@ public class Welcome extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
         }
     }
+
+    public void onClick(View view) {
+    }
+
     class DownloadWeather extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
