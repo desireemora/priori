@@ -234,4 +234,20 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/steps"
+        android:layout_width="59dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/steps"
+        app:layout_constraintBottom_toTopOf="@+id/mantra_txt"
+        app:layout_constraintEnd_toStartOf="@+id/btn_settings"
+        app:layout_constraintHorizontal_bias="0.392"
+        app:layout_constraintStart_toEndOf="@+id/tv_WeatherIcon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.833" />
+
 </android.support.constraint.ConstraintLayout>

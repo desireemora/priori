@@ -32,6 +32,8 @@
     <string name="productivity_tracker">Productivity Tracker</string>
     <string name="settings_label">Settings</string>
     <string name="signout_button">Sign out</string>
+    <string name="steps">000</string>
+    <string name="start_steps">Start</string>
 
 
 </resources>

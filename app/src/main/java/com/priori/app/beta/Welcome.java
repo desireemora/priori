@@ -1,10 +1,15 @@
 package com.priori.app.beta;
 
 import android.arch.persistence.room.Room;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
@@ -26,6 +31,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -34,7 +40,7 @@ import java.util.Locale;
 import java.util.Random;
 
 
-public class Welcome extends AppCompatActivity {
+public class Welcome extends AppCompatActivity implements SensorEventListener {
 
     static SharedPreferences mPreferences;
     static SharedPreferences.Editor mEditor;
@@ -47,6 +53,12 @@ public class Welcome extends AppCompatActivity {
     private TextView viewTitle;
     public static PrioriDB prioriDB;
     FirebaseAuth firebaseAuth;
+
+    private TextView text_steps;
+    SensorManager sensorManager;
+    boolean running = false;
+
+
 
     String[] mantraArray = {"“The Way Get Started Is To Quit Talking And Begin Doing.” – Walt Disney",
             "“The Pessimist Sees Difficulty In Every Opportunity. The Optimist Sees Opportunity In Every Difficulty.” – Winston Churchill",
@@ -78,9 +90,9 @@ public class Welcome extends AppCompatActivity {
             "“A Room Without Books Is Like A Body Without A Soul.” – Marcus Tullius Cicero","“I Think Goals Should Never Be Easy, They Should Force You To Work, Even If They Are Uncomfortable At The Time.” – Michael Phelps","“One Of The Lessons That I Grew Up With Was To Always Stay True To Yourself And Never Let What Somebody Else Says Distract You From Your Goals.” – Michelle Obama","“Today’s Accomplishments Were Yesterday’s Impossibilities.” – Robert H. Schuller","“The Only Way To Do Great Work Is To Love What You Do. If You Haven’t Found It Yet, Keep Looking. Don’t Settle.” – Steve Jobs","“You Don’t Have To Be Great To Start, But You Have To Start To Be Great.” – Zig Ziglar","“A Clear Vision, Backed By Definite Plans, Gives You A Tremendous Feeling Of Confidence And Personal Power.” – Brian Tracy","“There Are No Limits To What You Can Accomplish, Except The Limits You Place On Your Own Thinking.” – Brian Tracy","“Integrity Is The Most Valuable And Respected Quality Of Leadership. Always Keep Your Word.” - Brian Tracy","Your limitation—it’s only your imagination.","Push yourself, because no one else is going to do it for you.","Sometimes later becomes never. Do it now.","Great things never come from comfort zones.","Dream it. Wish it. Do it.","Success doesn’t just find you. You have to go out and get it.","The harder you work for something, the greater you’ll feel when you achieve it.","Dream bigger. Do bigger.","Don’t stop when you’re tired. Stop when you’re done.","Wake up with determination. Go to bed with satisfaction.","Do something today that your future self will thank you for.","Little things make big days.","It’s going to be hard, but hard does not mean impossible.","Don’t wait for opportunity. Create it.","Sometimes we’re tested not to show our weaknesses, but to discover our strengths.","The key to success is to focus on goals, not obstacles."};
 
 
-
     /* Please Put your API KEY here */
     String OPEN_WEATHER_MAP_API = "001ade5089a978cd383942ac275ac67c";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,12 +106,7 @@ public class Welcome extends AppCompatActivity {
 
         //Defining the variables we will use
         mantra_txt = findViewById(R.id.mantra_txt);
-        //mantra_txt.setText(mantraArray[n]);
         weather_txt = findViewById(R.id.tv_weatherText);
-//        weatherIcon = (TextView) findViewById(R.id.tv_WeatherIcon);
-//        weatherFont = Typeface.createFromAsset(getAssets(), "font/weathericonswebfont.ttf");
-//        weatherIcon.setTypeface(weatherFont);
-
 
         //preferences sheet variables
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -107,9 +114,6 @@ public class Welcome extends AppCompatActivity {
 
         //checks for mantra visibility status
         prioriDB = Room.databaseBuilder(getApplicationContext(),PrioriDB.class,"taskdb").allowMainThreadQueries().build();
-
-
-
 
 
         final ImageButton settingsButton = findViewById(R.id.btn_settings);
@@ -145,7 +149,6 @@ public class Welcome extends AppCompatActivity {
         tsk5_view.setText("");
 
 
-
         for(TaskDB tsk : mytasks){
             count = count + 1;
 
@@ -171,22 +174,11 @@ public class Welcome extends AppCompatActivity {
                         break;
 
                 }
-
-
-
-
-            //}
-
-
             if (count == 5) {
                 break;
             }
 
         }
-
-
-
-
 
 
         cal.setVisibility(View.GONE);
@@ -257,8 +249,6 @@ public class Welcome extends AppCompatActivity {
         });
 
 
-
-
         //*********** mantra random start **********************
         Calendar cal = Calendar.getInstance();
         int curr_date = cal.get(Calendar.DAY_OF_MONTH);
@@ -285,21 +275,13 @@ public class Welcome extends AppCompatActivity {
         }
         //*********** mantra random end ************************
 
-
-
-
-    }
-
-    @Override
-    protected void onStart(){
-        super.onStart();
-
+        //step counter//
+        text_steps = (TextView) findViewById(R.id.steps);
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        String steps = "0";
+        text_steps.setText(steps);
 
     }
-
-
-
-
 
 
     private void calendarView(){
@@ -332,7 +314,18 @@ public class Welcome extends AppCompatActivity {
         super.onResume();
         checkSharedPreferences();
 
+        running = true;
+        Sensor countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+        if(countSensor != null){
+            sensorManager.registerListener(this, countSensor, SensorManager.SENSOR_DELAY_UI);
+        }
+
+        else{
+            Toast.makeText(this, "Sensor not found!", Toast.LENGTH_SHORT).show();
+        }
+
     }
+
     public void taskLoadUp(String query) {
         if (Weather.isNetworkAvailable(getApplicationContext())) {
             DownloadWeather task = new DownloadWeather();
@@ -342,7 +335,26 @@ public class Welcome extends AppCompatActivity {
         }
     }
 
-    public void onClick(View view) {
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+
+        Calendar cal = Calendar.getInstance();
+        int curr_date = cal.get(Calendar.DAY_OF_MONTH);
+        SharedPreferences set = getSharedPreferences("PREF",0);
+        int last_day = set.getInt("day_new",0);
+
+        if(last_day != curr_date){
+            event.values[0] = 0;
+        }
+
+        if(running){
+            text_steps.setText(String.valueOf(event.values[0]));
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 
     class DownloadWeather extends AsyncTask<String, Void, String> {
