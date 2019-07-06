@@ -28,6 +28,7 @@ import org.json.JSONObject;
 import java.text.DateFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 
 public class Welcome extends AppCompatActivity {
@@ -43,6 +44,42 @@ public class Welcome extends AppCompatActivity {
     private TextView viewTitle;
     public static PrioriDB prioriDB;
     FirebaseAuth firebaseAuth;
+
+    //Mantra Array
+    Random rand = new Random();
+    int n = rand.nextInt(53); // Gives n such that 0 <= n < 53
+
+    String[] mantraArray = {"“The Way Get Started Is To Quit Talking And Begin Doing.” – Walt Disney",
+            "“The Pessimist Sees Difficulty In Every Opportunity. The Optimist Sees Opportunity In Every Difficulty.” – Winston Churchill",
+            "“Don’t Let Yesterday Take Up Too Much Of Today.” – Will Rogers","“You Learn More From Failure Than From Success. Don’t Let It Stop You. Failure Builds Character.” – Unknown",
+            "“It’s Not Whether You Get Knocked Down, It’s Whether You Get Up.” – Inspirational Quote By Vince Lombardi",
+            "“If You Are Working On Something That You Really Care About, You Don’t Have To Be Pushed. The Vision Pulls You.” – Steve Jobs",
+            "“People Who Are Crazy Enough To Think They Can Change The World, Are The Ones Who Do.” – Rob Siltanen",
+            "“Failure Will Never Overtake Me If My Determination To Succeed Is Strong Enough.” – Og Mandino",
+            "“Entrepreneurs Are Great At Dealing With Uncertainty And Also Very Good At Minimizing Risk. That’s The Classic Entrepreneur.” – Mohnish Pabrai",
+            "“We May Encounter Many Defeats But We Must Not Be Defeated.” – Maya Angelou",
+            "“Knowing Is Not Enough; We Must Apply. Wishing Is Not Enough; We Must Do.” – Johann Wolfgang Von Goethe",
+            "“Imagine Your Life Is Perfect In Every Respect; What Would It Look Like?” – Brian Tracy",
+            "“We Generate Fears While We Sit. We Overcome Them By Action.” – Dr. Henry Link",
+            "“Whether You Think You Can Or Think You Can’t, You’re Right.” – Quote By Henry Ford",
+            "“Security Is Mostly A Superstition. Life Is Either A Daring Adventure Or Nothing.” – Helen Keller",
+            "“The Man Who Has Confidence In Himself Gains The Confidence Of Others.” – Hasidic Proverb",
+            "“The Only Limit To Our Realization Of Tomorrow Will Be Our Doubts Of Today.” – Franklin D. Roosevelt",
+            "“Creativity Is Intelligence Having Fun.” – Albert Einstein",
+            "“What You Lack In Talent Can Be Made Up With Desire, Hustle And Giving 110% All The Time.” – Don Zimmer",
+            "“Do What You Can With All You Have, Wherever You Are.” – Theodore Roosevelt",
+            "“Develop An ‘Attitude Of Gratitude’. Say Thank You To Everyone You Meet For Everything They Do For You.” – Brian Tracy",
+            "“You Are Never Too Old To Set Another Goal Or To Dream A New Dream.” – C.S. Lewis",
+            "“To See What Is Right And Not Do It Is A Lack Of Courage.” – Confucius",
+            "“Reading Is To The Mind, As Exercise Is To The Body.” – Brian Tracy",
+            "“Fake It Until You Make It! Act As If You Had All The Confidence You Require Until It Becomes Your Reality.” – Brian Tracy",
+            "“The Future Belongs To The Competent. Get Good, Get Better, Be The Best!” – Brian Tracy",
+            "“For Every Reason It’s Not Possible, There Are Hundreds Of People Who Have Faced The Same Circumstances And Succeeded.” – Jack Canfield",
+            "“Things Work Out Best For Those Who Make The Best Of How Things Work Out.” – John Wooden",
+            "“A Room Without Books Is Like A Body Without A Soul.” – Marcus Tullius Cicero","“I Think Goals Should Never Be Easy, They Should Force You To Work, Even If They Are Uncomfortable At The Time.” – Michael Phelps","“One Of The Lessons That I Grew Up With Was To Always Stay True To Yourself And Never Let What Somebody Else Says Distract You From Your Goals.” – Michelle Obama","“Today’s Accomplishments Were Yesterday’s Impossibilities.” – Robert H. Schuller","“The Only Way To Do Great Work Is To Love What You Do. If You Haven’t Found It Yet, Keep Looking. Don’t Settle.” – Steve Jobs","“You Don’t Have To Be Great To Start, But You Have To Start To Be Great.” – Zig Ziglar","“A Clear Vision, Backed By Definite Plans, Gives You A Tremendous Feeling Of Confidence And Personal Power.” – Brian Tracy","“There Are No Limits To What You Can Accomplish, Except The Limits You Place On Your Own Thinking.” – Brian Tracy","“Integrity Is The Most Valuable And Respected Quality Of Leadership. Always Keep Your Word.” - Brian Tracy","Your limitation—it’s only your imagination.","Push yourself, because no one else is going to do it for you.","Sometimes later becomes never. Do it now.","Great things never come from comfort zones.","Dream it. Wish it. Do it.","Success doesn’t just find you. You have to go out and get it.","The harder you work for something, the greater you’ll feel when you achieve it.","Dream bigger. Do bigger.","Don’t stop when you’re tired. Stop when you’re done.","Wake up with determination. Go to bed with satisfaction.","Do something today that your future self will thank you for.","Little things make big days.","It’s going to be hard, but hard does not mean impossible.","Don’t wait for opportunity. Create it.","Sometimes we’re tested not to show our weaknesses, but to discover our strengths.","The key to success is to focus on goals, not obstacles."};
+
+
+
     /* Please Put your API KEY here */
     String OPEN_WEATHER_MAP_API = "001ade5089a978cd383942ac275ac67c";
 
@@ -58,6 +95,7 @@ public class Welcome extends AppCompatActivity {
 
         //Defining the variables we will use
         mantra_txt = findViewById(R.id.mantra_txt);
+        mantra_txt.setText(mantraArray[n]);
         weather_txt = findViewById(R.id.tv_weatherText);
 //        weatherIcon = (TextView) findViewById(R.id.tv_WeatherIcon);
 //        weatherFont = Typeface.createFromAsset(getAssets(), "font/weathericonswebfont.ttf");
