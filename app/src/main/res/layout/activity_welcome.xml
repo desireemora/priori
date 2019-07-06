@@ -8,19 +8,23 @@
 
     <TextView
         android:id="@+id/mantra_txt"
-        android:layout_width="319dp"
-        android:layout_height="149dp"
+        android:layout_width="323dp"
+        android:layout_height="113dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="76dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:gravity="center"
         android:text="Why wait for tomorrow when you can accomplish it today."
         android:textSize="12sp"
         android:textStyle="italic"
         app:fontFamily="@font/coustard"
+        app:layout_constraintBottom_toTopOf="@+id/btnCalendar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.034" />
 
     <TextView
         android:id="@+id/tv_weatherText"
@@ -60,9 +64,7 @@
         android:layout_width="351dp"
         android:layout_height="340dp"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginBottom="64dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -114,46 +116,53 @@
         app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/btn_productivityTracker"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mantra_txt" />
-
     <ImageButton
         android:id="@+id/btn_productivityTracker"
         android:layout_width="100dp"
         android:layout_height="30dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_top5"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.125"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mantra_txt"
+        app:layout_constraintVertical_bias="0.004"
         app:srcCompat="@android:drawable/btn_star_big_off" />
 
     <ImageButton
-        android:id="@+id/btn_addtask"
+        android:id="@+id/btn_addTask"
         android:layout_width="100dp"
         android:layout_height="30dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginRight="28dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnCalendar"
+        app:layout_constraintEnd_toStartOf="@+id/btn_removeTask"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/btn_productivityTracker"
         app:layout_constraintTop_toBottomOf="@+id/mantra_txt"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@android:drawable/ic_menu_add" />
+
+    <ImageButton
+        android:id="@+id/btn_removeTask"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnDaily"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.753"
+        app:layout_constraintStart_toEndOf="@+id/btn_productivityTracker"
+        app:layout_constraintTop_toBottomOf="@+id/mantra_txt"
+        app:layout_constraintVertical_bias="0.004"
+        app:srcCompat="@android:drawable/ic_menu_delete" />
 
     <LinearLayout
         android:id="@+id/lv_ListView"
@@ -174,16 +183,9 @@
             android:layout_width="match_parent"
             android:layout_height="43dp"
             android:gravity="center"
-            android:text="TextView"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/space"
-            android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:gravity="center"
-            android:text="TextView"
-            android:textSize="18sp" />
+            android:text="Title"
+            android:textSize="18sp"
+            android:fontFamily="casual"/>/>
 
         <TextView
             android:id="@+id/task1"
@@ -192,45 +194,50 @@
             android:clickable="true"
             android:gravity="center"
             android:onClick="onClick"
-            android:text="TextView"
-            android:textSize="18sp" />
+            android:text="Task 1"
+            android:textSize="18sp"
+            android:fontFamily="casual"/>
 
         <TextView
             android:id="@+id/task2"
             android:layout_width="match_parent"
             android:layout_height="43dp"
             android:gravity="center"
-            android:text="TextView"
+            android:text="Task 2"
             android:textSize="18sp"
             android:onClick="onClick"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:fontFamily="casual"/>
         <TextView
             android:id="@+id/task3"
             android:layout_width="match_parent"
             android:layout_height="43dp"
             android:gravity="center"
-            android:text="TextView"
+            android:text="Task 3"
             android:textSize="18sp"
             android:onClick="onClick"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:fontFamily="casual"/>/>
         <TextView
             android:id="@+id/task4"
             android:layout_width="match_parent"
             android:layout_height="43dp"
             android:gravity="center"
-            android:text="TextView"
+            android:text="Task 4"
             android:textSize="18sp"
             android:onClick="onClick"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:fontFamily="casual"/>/>
         <TextView
             android:id="@+id/task5"
             android:layout_width="match_parent"
             android:layout_height="43dp"
             android:gravity="center"
-            android:text="TextView"
+            android:text="Task 5"
             android:textSize="18sp"
             android:onClick="onClick"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:fontFamily="casual"/>/>
 
     </LinearLayout>
 

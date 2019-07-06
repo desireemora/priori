@@ -1,5 +1,6 @@
 package com.priori.app.beta;
 
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
@@ -72,4 +73,6 @@ public class TaskDB {
     public void setUserID(String userID) {
         UserID = userID;
     }
+
+
 }

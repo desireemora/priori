@@ -4,9 +4,7 @@ import android.arch.persistence.room.Room;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
-import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -30,7 +28,6 @@ import org.json.JSONObject;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 
 
@@ -131,8 +128,6 @@ public class Welcome extends AppCompatActivity {
         String holdTasks ="";
         int count = 0;
 
-        TextView blank = findViewById(R.id.space);
-        blank.setText("");
         TextView tsk1_view = findViewById(R.id.task1);
         tsk1_view.setText("");
         TextView tsk2_view = findViewById(R.id.task2);
@@ -211,7 +206,7 @@ public class Welcome extends AppCompatActivity {
                 top5View();
             }
         });
-        final ImageButton btnAddTask = findViewById(R.id.btn_addtask);
+        final ImageButton btnAddTask = findViewById(R.id.btn_addTask);
         btnAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -229,35 +224,42 @@ public class Welcome extends AppCompatActivity {
         });
         checkSharedPreferences();
 
-        tsk1_view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if(tsk1_view.getText() != "") {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(Welcome.this);
+            tsk1_view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Welcome.this);
 
-                //message and title
-                builder.setMessage("Is this task completed?")
-                        .setTitle("Complete Task");
-                // Add the buttons
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User clicked OK button
-                    }
-                });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
-                    }
-                });
-
-                // Create the AlertDialog
-                AlertDialog dialog = builder.create();
-            }
-
-        });
+                    //message and title
+                    builder.setMessage("Is this task completed?")
+                            .setTitle("Complete Task");
+                    // Add the buttons
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User clicked yes button
 
 
 
+
+
+
+
+
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User clicked no button
+                        }
+                    });
+
+                    // Create the AlertDialog
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            });
+        }
 
         //*********** mantra random start **********************
         Calendar cal = Calendar.getInstance();

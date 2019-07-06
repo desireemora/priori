@@ -49,12 +49,11 @@ public class AddTask extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        final Spinner spPriorities = findViewById(R.id.sp_priorities);
-        final Spinner spList = findViewById(R.id.sp_list);
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.priorities_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spPriorities.setAdapter(adapter);
+
         checkSharedPreferences();
 
         firebaseAuth = FirebaseAuth.getInstance();
