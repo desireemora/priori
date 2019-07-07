@@ -16,6 +16,9 @@ public interface TaskDAI {
     @Query("select * from TaskDB")
     List<TaskDB> getTasks();
 
+    @Query("delete from TaskDB where TaskName = :tskname")
+    public void deleteTaskByName(String tskname);
+
     @Delete
     public void deleteTask(TaskDB task);
 

@@ -16,9 +16,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,6 +39,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
+import static android.app.PendingIntent.getActivity;
+
 
 public class Welcome extends AppCompatActivity implements SensorEventListener {
 
@@ -45,12 +49,14 @@ public class Welcome extends AppCompatActivity implements SensorEventListener {
     public TextView mantra_txt;
     private TextView weather_txt;
     private ImageButton btnTracker;
+    private ImageButton btnDelete;
     private Handler handler = new Handler();
     private CalendarView cal;
     private LinearLayout listView;
     private TextView viewTitle;
     public static PrioriDB prioriDB;
     FirebaseAuth firebaseAuth;
+    private String m_Text = "";
 
     private TextView text_steps;
     SensorManager sensorManager;
@@ -217,40 +223,71 @@ public class Welcome extends AppCompatActivity implements SensorEventListener {
         });
         checkSharedPreferences();
 
-        if(tsk1_view.getText() != "") {
 
-            tsk1_view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(Welcome.this);
+        //*********** DELETE TASK OBJECT START**********************
+        btnDelete = findViewById(R.id.btn_removeTask);
 
-                    //message and title
-                    builder.setMessage("Is this task completed?")
-                            .setTitle("Complete Task");
-                    // Add the buttons
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // User clicked yes button
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(Welcome.this);
+                builder.setTitle("Complete or Delete Task")
+                        .setMessage("Enter Task Name");
+
+                // Set up the input
+                final EditText input = new EditText(Welcome.this);
+                // Specify the type of input expected
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+
+                // Set up the buttons
+                builder.setPositiveButton("Complete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        m_Text = input.getText().toString();
+                        String task_name = m_Text;
+
+                        Welcome.prioriDB.myTaskDai().deleteTaskByName(task_name);
+
+
+
+                        Toast.makeText(Welcome.this,m_Text, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        m_Text = input.getText().toString();
+                        String task_name = m_Text;
+
+                        Welcome.prioriDB.myTaskDai().deleteTaskByName(task_name);
+
+                        //dialog.cancel();
+                    }
+                });
+
+                builder.show();
 
 
 
 
 
 
-                        }
-                    });
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // User clicked no button
-                        }
-                    });
 
-                    // Create the AlertDialog
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
-            });
-        }
+            }
+        });
+
+
+
+
+
+        //*********** DELETE TASK OBJECT END************************
+
+
+
+
+
 
         //*********** mantra random start **********************
         Calendar cal = Calendar.getInstance();
@@ -296,6 +333,59 @@ public class Welcome extends AppCompatActivity implements SensorEventListener {
         cal.setVisibility(View.GONE);
         listView.setVisibility(View.VISIBLE);
         viewTitle.setText("TOP 5");
+
+        List<TaskDB> mytasks;
+        mytasks = Welcome.prioriDB.myTaskDai().getTasks();
+        String holdTasks ="";
+        int count = 0;
+
+        TextView tsk1_view = findViewById(R.id.task1);
+        tsk1_view.setText("");
+        TextView tsk2_view = findViewById(R.id.task2);
+        tsk2_view.setText("");
+        TextView tsk3_view = findViewById(R.id.task3);
+        tsk3_view.setText("");
+        TextView tsk4_view = findViewById(R.id.task4);
+        tsk4_view.setText("");
+        TextView tsk5_view = findViewById(R.id.task5);
+        tsk5_view.setText("");
+
+
+        for(TaskDB tsk : mytasks){
+            count = count + 1;
+
+            //if(tsk.getUserID() == user.getUid()) {
+
+            holdTasks = tsk.getTaskName() + " " + tsk.getDueDate() + " "+ tsk.getDueTime();
+
+            switch(count){
+                case 1:
+                    tsk1_view.setText(holdTasks);
+                    break;
+                case 2:
+                    tsk2_view.setText(holdTasks);
+                    break;
+                case 3:
+                    tsk3_view.setText(holdTasks);
+                    break;
+                case 4:
+                    tsk4_view.setText(holdTasks);
+                    break;
+                case 5:
+                    tsk5_view.setText(holdTasks);
+                    break;
+
+            }
+            if (count == 5) {
+                break;
+            }
+
+        }
+
+
+
+
+
     }
     private void dailyView(){
         cal.setVisibility(View.GONE);

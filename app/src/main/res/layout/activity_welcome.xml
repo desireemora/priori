@@ -191,9 +191,7 @@
             android:id="@+id/task1"
             android:layout_width="match_parent"
             android:layout_height="43dp"
-            android:clickable="true"
             android:gravity="center"
-            android:onClick="onClick"
             android:text="Task 1"
             android:textSize="18sp"
             android:fontFamily="casual"/>
@@ -205,8 +203,6 @@
             android:gravity="center"
             android:text="Task 2"
             android:textSize="18sp"
-            android:onClick="onClick"
-            android:clickable="true"
             android:fontFamily="casual"/>
         <TextView
             android:id="@+id/task3"
@@ -215,8 +211,6 @@
             android:gravity="center"
             android:text="Task 3"
             android:textSize="18sp"
-            android:onClick="onClick"
-            android:clickable="true"
             android:fontFamily="casual"/>/>
         <TextView
             android:id="@+id/task4"
@@ -225,8 +219,6 @@
             android:gravity="center"
             android:text="Task 4"
             android:textSize="18sp"
-            android:onClick="onClick"
-            android:clickable="true"
             android:fontFamily="casual"/>/>
         <TextView
             android:id="@+id/task5"
@@ -235,8 +227,6 @@
             android:gravity="center"
             android:text="Task 5"
             android:textSize="18sp"
-            android:onClick="onClick"
-            android:clickable="true"
             android:fontFamily="casual"/>/>
 
     </LinearLayout>
