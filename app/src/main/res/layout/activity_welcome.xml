@@ -91,11 +91,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Daily"
+        android:text="ALL"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.173"
@@ -164,6 +162,20 @@
         app:layout_constraintVertical_bias="0.004"
         app:srcCompat="@android:drawable/ic_menu_delete" />
 
+    <ListView
+        android:id="@+id/listViewAll"
+        android:layout_width="351dp"
+        android:layout_height="338dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="68dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <LinearLayout
         android:id="@+id/lv_ListView"
         android:layout_width="351dp"
@@ -185,7 +197,7 @@
             android:gravity="center"
             android:text="Title"
             android:textSize="18sp"
-            android:fontFamily="casual"/>/>
+            android:fontFamily="casual"/>
 
         <TextView
             android:id="@+id/task1"
@@ -211,7 +223,7 @@
             android:gravity="center"
             android:text="Task 3"
             android:textSize="18sp"
-            android:fontFamily="casual"/>/>
+            android:fontFamily="casual"/>
         <TextView
             android:id="@+id/task4"
             android:layout_width="match_parent"
@@ -219,7 +231,7 @@
             android:gravity="center"
             android:text="Task 4"
             android:textSize="18sp"
-            android:fontFamily="casual"/>/>
+            android:fontFamily="casual"/>
         <TextView
             android:id="@+id/task5"
             android:layout_width="match_parent"
@@ -227,7 +239,7 @@
             android:gravity="center"
             android:text="Task 5"
             android:textSize="18sp"
-            android:fontFamily="casual"/>/>
+            android:fontFamily="casual"/>
 
     </LinearLayout>
 

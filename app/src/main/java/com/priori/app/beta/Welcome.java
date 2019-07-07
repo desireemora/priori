@@ -18,11 +18,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.InputType;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Handler;
@@ -35,6 +37,7 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
@@ -53,6 +56,7 @@ public class Welcome extends AppCompatActivity implements SensorEventListener {
     private Handler handler = new Handler();
     private CalendarView cal;
     private LinearLayout listView;
+    private ListView listView_allTasks;
     private TextView viewTitle;
     public static PrioriDB prioriDB;
     FirebaseAuth firebaseAuth;
@@ -129,13 +133,14 @@ public class Welcome extends AppCompatActivity implements SensorEventListener {
             }
         });
 
+        listView_allTasks = findViewById(R.id.listViewAll);
         cal = findViewById(R.id.cv_calendar);
         cal.setDate(System.currentTimeMillis(),true,true);
         final Button btnCalendar = findViewById(R.id.btnCalendar);
         listView = findViewById(R.id.lv_ListView);
 
         List<TaskDB> mytasks;
-        mytasks = Welcome.prioriDB.myTaskDai().getTasks();
+        mytasks = Welcome.prioriDB.myTaskDai().getTasksSortedByDate();
         String holdTasks ="";
         int count = 0;
 
@@ -184,6 +189,7 @@ public class Welcome extends AppCompatActivity implements SensorEventListener {
 
 
         cal.setVisibility(View.GONE);
+        listView_allTasks.setVisibility(View.GONE);
         viewTitle = findViewById(R.id.tv_listTitle);
         btnCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -327,15 +333,17 @@ public class Welcome extends AppCompatActivity implements SensorEventListener {
     private void calendarView(){
         cal.setVisibility(View.VISIBLE);
         listView.setVisibility(View.GONE);
+        listView_allTasks.setVisibility(View.GONE);
         viewTitle.setText("");
     }
     private void top5View(){
         cal.setVisibility(View.GONE);
         listView.setVisibility(View.VISIBLE);
+        listView_allTasks.setVisibility(View.GONE);
         viewTitle.setText("TOP 5");
 
         List<TaskDB> mytasks;
-        mytasks = Welcome.prioriDB.myTaskDai().getTasks();
+        mytasks = Welcome.prioriDB.myTaskDai().getTasksSortedByDate();
         String holdTasks ="";
         int count = 0;
 
@@ -389,9 +397,32 @@ public class Welcome extends AppCompatActivity implements SensorEventListener {
     }
     private void dailyView(){
         cal.setVisibility(View.GONE);
-        listView.setVisibility(View.VISIBLE);
-        viewTitle.setText("Daily");
+        listView.setVisibility(View.GONE);
+        listView_allTasks.setVisibility(View.VISIBLE);
+        viewTitle.setText("All Tasks");
+
+        List<TaskDB> mytasks;
+        List tasksToString = new ArrayList();
+
+        ArrayAdapter adapter;
+
+        mytasks = Welcome.prioriDB.myTaskDai().getTasksSortedByDate();
+        String holdTasks ="";
+
+        for(TaskDB tsk : mytasks){
+
+            holdTasks = tsk.getTaskName() + " " + tsk.getDueDate() + " " + tsk.getDueTime();
+
+            tasksToString.add(holdTasks);
+
+        }
+
+        adapter = new ArrayAdapter(Welcome.this,android.R.layout.simple_list_item_1,tasksToString);
+
+        listView_allTasks.setAdapter(adapter);
+
     }
+
     private Runnable updateWeather = new Runnable()
     {
         public void run()

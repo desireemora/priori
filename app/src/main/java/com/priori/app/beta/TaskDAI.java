@@ -16,6 +16,9 @@ public interface TaskDAI {
     @Query("select * from TaskDB")
     List<TaskDB> getTasks();
 
+    @Query("select * from TaskDB order by DueDate ASC , DueTime DESC")
+    List<TaskDB> getTasksSortedByDate();
+
     @Query("delete from TaskDB where TaskName = :tskname")
     public void deleteTaskByName(String tskname);
 
