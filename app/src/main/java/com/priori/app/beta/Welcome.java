@@ -5,14 +5,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-<<<<<<< HEAD
-=======
 import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
->>>>>>> master
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
@@ -238,9 +235,6 @@ public class Welcome extends AppCompatActivity implements SensorEventListener {
 
 
 
-<<<<<<< HEAD
-
-
 
 
                         }
@@ -258,8 +252,6 @@ public class Welcome extends AppCompatActivity implements SensorEventListener {
             });
         }
 
-=======
->>>>>>> master
         //*********** mantra random start **********************
         Calendar cal = Calendar.getInstance();
         int curr_date = cal.get(Calendar.DAY_OF_MONTH);
@@ -314,7 +306,7 @@ public class Welcome extends AppCompatActivity implements SensorEventListener {
     {
         public void run()
         {
-            //write here whaterver you want to repeat
+            //write here whatever you want to repeat
             String citySet = mPreferences.getString("citySetting", "Tampa, US");
             taskLoadUp(citySet);
             //10 Minutes refresh rate
