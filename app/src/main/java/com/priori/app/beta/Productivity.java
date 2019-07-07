@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 import android.widget.ImageButton;
 
+
 public class Productivity extends AppCompatActivity {
 
     static SharedPreferences mPreferences;
@@ -31,7 +32,25 @@ public class Productivity extends AppCompatActivity {
             }
         });
         checkSharedPreferences();
+
+
+
+
+
+
+
+
+
     }
+
+
+
+
+
+
+
+
+
     private void checkSharedPreferences() {
 
         Boolean themeSet = mPreferences.getBoolean("darkState", true);
