@@ -194,10 +194,11 @@
             android:id="@+id/tv_listTitle"
             android:layout_width="match_parent"
             android:layout_height="43dp"
+            android:fontFamily="casual"
             android:gravity="center"
             android:text="Title"
-            android:textSize="18sp"
-            android:fontFamily="casual"/>
+            android:textColor="#E91E63"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/task1"

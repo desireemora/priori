@@ -37,9 +37,11 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import static android.app.PendingIntent.getActivity;
@@ -257,9 +259,42 @@ public class Welcome extends AppCompatActivity implements SensorEventListener {
 
                         Welcome.prioriDB.myTaskDai().deleteTaskByName(task_name);
 
+                        Calendar cal = Calendar.getInstance();
+                        SimpleDateFormat dayFormat = new SimpleDateFormat("E", Locale.US);
+                        String strDayOfWeek = dayFormat.format(cal.getTime());
+
+                        int day_count = mPreferences.getInt(strDayOfWeek,0);
+                        String week_check = mPreferences.getString("week_check","none");
 
 
-                        Toast.makeText(Welcome.this,m_Text, Toast.LENGTH_SHORT).show();
+                        if(strDayOfWeek.equals("Mon")){
+                            SimpleDateFormat mdformat = new SimpleDateFormat("dd / MM / yyyy ");
+                            Toast.makeText(Welcome.this,strDayOfWeek, Toast.LENGTH_SHORT).show();
+                            if (week_check.equals(mdformat.format(cal.getTime()))== false){
+                                mEditor.putString("week_check",mdformat.format(cal.getTime()));
+                                mEditor.putInt("Mon", 0);
+                                mEditor.putInt("Tue", 0);
+                                mEditor.putInt("Wed", 0);
+                                mEditor.putInt("Thu", 0);
+                                mEditor.putInt("Fri", 0);
+                                mEditor.putInt("Sat", 0);
+                                mEditor.putInt("Sun", 0);
+                                mEditor.apply();
+                            } else {
+                                day_count++;
+                                mEditor.putInt(strDayOfWeek, day_count);
+                                mEditor.apply();
+
+                            }
+                        }else{
+                            day_count++;
+                            mEditor.putInt(strDayOfWeek, day_count);
+                            mEditor.apply();
+
+                        }
+
+                        //Toast.makeText(Welcome.this,"Task Completed!", Toast.LENGTH_SHORT).show();
+                        checkSharedPreferences();
                     }
                 });
                 builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
@@ -269,6 +304,9 @@ public class Welcome extends AppCompatActivity implements SensorEventListener {
                         String task_name = m_Text;
 
                         Welcome.prioriDB.myTaskDai().deleteTaskByName(task_name);
+                        Toast.makeText(Welcome.this,"Task Deleted!", Toast.LENGTH_SHORT).show();
+
+                        checkSharedPreferences();
 
                         //dialog.cancel();
                     }
@@ -284,11 +322,6 @@ public class Welcome extends AppCompatActivity implements SensorEventListener {
 
             }
         });
-
-
-
-
-
         //*********** DELETE TASK OBJECT END************************
 
 
