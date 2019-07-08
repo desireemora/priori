@@ -16,7 +16,7 @@ public interface TaskDAI {
     @Query("select * from TaskDB")
     List<TaskDB> getTasks();
 
-    @Query("select * from TaskDB order by DueDate ASC , DueTime DESC")
+    @Query("select * from TaskDB order by DueDate ASC , DueTime ASC")
     List<TaskDB> getTasksSortedByDate();
 
     @Query("delete from TaskDB where TaskName = :tskname")
