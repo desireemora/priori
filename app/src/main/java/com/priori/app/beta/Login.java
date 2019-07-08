@@ -18,15 +18,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Login extends AppCompatActivity{
+
+    private static final String KEY_NAME = "name";
+
+
 
     EditText email;
     EditText password;
     Button login;
+
     private CheckBox rememberCred;
     static SharedPreferences mPreferences;
     static SharedPreferences.Editor mEditor;
@@ -35,6 +45,9 @@ public class Login extends AppCompatActivity{
     private TextView txtFingerprint;
 
     private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private DocumentReference userRef;
 
     private FingerprintManager fingerprintmanager;
 
@@ -82,6 +95,21 @@ public class Login extends AppCompatActivity{
                                 mEditor.apply();
                             }
                             loadingBar.setVisibility(View.GONE);
+
+                            String db_email = user.getEmail();
+                            userRef = db.collection("users").document(db_email);
+                            
+                            userRef.get()
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            if (documentSnapshot.exists()) {
+                                                String db_name = documentSnapshot.getString(KEY_NAME);
+                                                Toast.makeText(Login.this, "Welcome " + db_name, Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+                                    });
+
                             startActivity(new Intent(Login.this, Welcome.class) );
                         }
 
