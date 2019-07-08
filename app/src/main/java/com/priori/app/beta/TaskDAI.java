@@ -19,6 +19,10 @@ public interface TaskDAI {
     @Query("select * from TaskDB order by DueDate ASC , DueTime ASC")
     List<TaskDB> getTasksSortedByDate();
 
+    @Query("select * from TaskDB where UserID = :user_id order by DueDate ASC , DueTime ASC")
+    List<TaskDB> getTasksSortedUser(String user_id);
+
+
     @Query("delete from TaskDB where TaskName = :tskname")
     public void deleteTaskByName(String tskname);
 

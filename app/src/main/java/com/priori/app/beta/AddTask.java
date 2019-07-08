@@ -59,7 +59,6 @@ public class AddTask extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
 
-
         task_btn_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

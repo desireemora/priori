@@ -66,6 +66,8 @@ public class Welcome extends AppCompatActivity implements SensorEventListener {
     SensorManager sensorManager;
     boolean running = false;
 
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
 
 
     String[] mantraArray = {"“The Way Get Started Is To Quit Talking And Begin Doing.” – Walt Disney",
@@ -110,7 +112,6 @@ public class Welcome extends AppCompatActivity implements SensorEventListener {
         setContentView(R.layout.activity_welcome);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         //Defining the variables we will use
         mantra_txt = findViewById(R.id.mantra_txt);
@@ -140,7 +141,7 @@ public class Welcome extends AppCompatActivity implements SensorEventListener {
         listView = findViewById(R.id.lv_ListView);
 
         List<TaskDB> mytasks;
-        mytasks = Welcome.prioriDB.myTaskDai().getTasksSortedByDate();
+        mytasks = Welcome.prioriDB.myTaskDai().getTasksSortedUser(user.getUid());
         String holdTasks ="";
         int count = 0;
 
@@ -343,7 +344,7 @@ public class Welcome extends AppCompatActivity implements SensorEventListener {
         viewTitle.setText("TOP 5");
 
         List<TaskDB> mytasks;
-        mytasks = Welcome.prioriDB.myTaskDai().getTasksSortedByDate();
+        mytasks = Welcome.prioriDB.myTaskDai().getTasksSortedUser(user.getUid());
         String holdTasks ="";
         int count = 0;
 
@@ -406,7 +407,7 @@ public class Welcome extends AppCompatActivity implements SensorEventListener {
 
         ArrayAdapter adapter;
 
-        mytasks = Welcome.prioriDB.myTaskDai().getTasksSortedByDate();
+        mytasks = Welcome.prioriDB.myTaskDai().getTasksSortedUser(user.getUid());
         String holdTasks ="";
 
         for(TaskDB tsk : mytasks){
