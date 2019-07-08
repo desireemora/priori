@@ -44,9 +44,8 @@ public class Login extends AppCompatActivity{
     private ImageButton btnFingerprint;
     private TextView txtFingerprint;
 
-    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private DocumentReference userRef;
 
     private FingerprintManager fingerprintmanager;
@@ -56,7 +55,7 @@ public class Login extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mPreferences.edit();
         email = findViewById(R.id.prompt_email);
@@ -69,6 +68,11 @@ public class Login extends AppCompatActivity{
         btnFingerprint.setVisibility(View.GONE);
         txtFingerprint = findViewById(R.id.tv_fingerprint);
         txtFingerprint.setVisibility(View.GONE);
+
+
+
+
+
 
         checkSharedPreferences();
 
@@ -96,9 +100,10 @@ public class Login extends AppCompatActivity{
                             }
                             loadingBar.setVisibility(View.GONE);
 
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             String db_email = user.getEmail();
+
                             userRef = db.collection("users").document(db_email);
-                            
                             userRef.get()
                                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                         @Override
@@ -109,6 +114,7 @@ public class Login extends AppCompatActivity{
                                             }
                                         }
                                     });
+
 
                             startActivity(new Intent(Login.this, Welcome.class) );
                         }
